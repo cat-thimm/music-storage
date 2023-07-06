@@ -1,0 +1,16 @@
+.search-wrapper {
+  width: calc(100% - 20px);
+  margin-top: 10px;
+  max-width: 50%;
+}
+
+.title-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: calc(100% - 20px);
+  column-gap: 20px;
+  row-gap: 20px;
+  flex-wrap: wrap;
+}
+

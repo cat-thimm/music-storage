@@ -8,6 +8,10 @@ import {LoginComponent} from './login/login.component';
 import {AppRoutingModule} from "./app-routing-module";
 import {MaterialModule} from "./material.module";
 import { RegistrationComponent } from './registration/registration.component';
+import { HomeComponent } from './home/home.component';
+import { DropdownComponent } from './home/dropdown/dropdown.component';
+import { OverviewComponent } from './home/overview/overview.component';
+import { TitleCardComponent } from './home/overview/title-card/title-card.component';
 
 @NgModule({
   imports: [
@@ -20,7 +24,11 @@ import { RegistrationComponent } from './registration/registration.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    HomeComponent,
+    DropdownComponent,
+    OverviewComponent,
+    TitleCardComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

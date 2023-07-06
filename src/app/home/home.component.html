@@ -1,0 +1,25 @@
+<p>
+  <mat-toolbar>
+    <span>Music Storage</span>
+    <button mat-button [routerLink]="['/login']">
+      <mat-icon>logout</mat-icon>
+      Logout
+    </button>
+  </mat-toolbar>
+</p>
+
+
+<mat-card class="container">
+  <mat-tab-group dynamicHeight color="accent">
+    <mat-tab label="Songübersicht">
+      <app-overview [dropdownArtist]="dropdownArtist"
+                    [dropdownGenre]="dropdownGenre"
+                    [dropdownInstrument]="dropdownInstrument"
+                    [dropdownMood]="dropdownMood"
+                    [dropdownTempo]="dropdownTempo"
+                    [searchResults]="searchResults">
+      </app-overview>
+    </mat-tab>
+    <mat-tab label="Neuer Song"></mat-tab>
+  </mat-tab-group>
+</mat-card>

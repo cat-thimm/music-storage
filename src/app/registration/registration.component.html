@@ -2,9 +2,10 @@
   <mat-card-header>
     <mat-card-title>Registrierung</mat-card-title>
   </mat-card-header>
-  <form #form="ngForm" class="col" >
+  <form #form="ngForm" class="col form">
     <mat-card-content class="col">
-      <mat-form-field>
+      <mat-form-field >
+        <mat-label>Name</mat-label>
         <input
           type="text"
           matInput
@@ -15,6 +16,7 @@
         />
       </mat-form-field>
       <mat-form-field>
+        <mat-label>E-Mail</mat-label>
         <input
           type="email"
           matInput
@@ -25,6 +27,7 @@
         />
       </mat-form-field>
       <mat-form-field>
+        <mat-label>Passwort</mat-label>
         <input
           type="password"
           matInput

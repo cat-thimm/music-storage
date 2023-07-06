@@ -47,3 +47,31 @@ $light-theme: mat.define-light-theme((
   justify-content: center;
 }
 
+.col-start {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.full-width {
+  width: 100%;
+}
+
+
+mat-form-field {
+  width: 100%;
+}
+
+
+
