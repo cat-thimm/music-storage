@@ -18,7 +18,7 @@
   </div>
 
   <div class="title-wrapper" *ngIf="searchResults.length > 0">
-    <app-title-card *ngFor="let result of searchResults.slice(currentPageIndex, pageSize)" [title]="result"></app-title-card>
+    <app-title-card *ngFor="let result of currentResults()" [title]="result"></app-title-card>
   </div>
 
   <mat-paginator [length]="searchResults.length"

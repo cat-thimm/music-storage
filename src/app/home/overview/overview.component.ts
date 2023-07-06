@@ -17,13 +17,12 @@ export class OverviewComponent {
   @Input() searchResults: Title[] = []
 
   currentPageIndex = 0;
- pageSize = 10;
+  pageSize = 10;
 
- length = this.searchResults.length
+  currentResults = () => this.searchResults.slice(this.currentPageIndex * this.pageSize, this.pageSize * (this.currentPageIndex + 1))
+
 
   handlePageEvent(e: PageEvent) {
-    // this.pageEvent = e;
-    // this.length = e.length;
     this.pageSize = e.pageSize;
     this.currentPageIndex = e.pageIndex;
   }
