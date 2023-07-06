@@ -1,0 +1,48 @@
+<mat-card class="login-container">
+  <mat-card-header>
+    <mat-card-title>Registrierung</mat-card-title>
+  </mat-card-header>
+  <form #form="ngForm" class="col" >
+    <mat-card-content class="col">
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="Vollständiger Name"
+          [(ngModel)]="name"
+          name="name"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="email"
+          matInput
+          placeholder="E-Mail"
+          [(ngModel)]="email"
+          name="email"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="password"
+          matInput
+          placeholder="Password"
+          [(ngModel)]="password"
+          name="password"
+          required
+        />
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions class="col">
+      <button type="submit" mat-button color="primary" [disabled]="form.invalid">
+        Jetzt registrieren
+      </button>
+      <button type="button" mat-button color="secondary" [routerLink]="['/login']">
+        Zum Login
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+

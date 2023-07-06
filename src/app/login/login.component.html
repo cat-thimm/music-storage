@@ -1,0 +1,39 @@
+<script src="../registration/registration.component.ts"></script>
+<mat-card class="login-container">
+  <mat-card-header>
+    <mat-card-title>Login</mat-card-title>
+  </mat-card-header>
+  <form #form="ngForm" class="col" (submit)="loginUser()">
+    <mat-card-content class="col">
+      <mat-form-field>
+        <input
+          type="email"
+          matInput
+          [(ngModel)]="email"
+          placeholder="E-Mail"
+          name="email"
+          required
+        />
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="password"
+          matInput
+          placeholder="Password"
+          name="password"
+          [(ngModel)]="password"
+          required
+        />
+      </mat-form-field>
+    </mat-card-content>
+    <mat-card-actions class="col">
+      <button type="submit" mat-button color="primary" [disabled]="form.invalid">
+        Anmelden
+      </button>
+      <button type="button" mat-button color="secondary" [routerLink]="['/register']">
+        Registrieren
+      </button>
+    </mat-card-actions>
+  </form>
+</mat-card>
+
