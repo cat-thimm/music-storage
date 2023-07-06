@@ -1,4 +1,4 @@
-<mat-card-content class="col-start">
+<mat-card-content class="col">
   <mat-form-field class="search-wrapper">
     <input
       type="text"
@@ -20,7 +20,7 @@
   <div class="title-wrapper" *ngIf="searchResults.length > 0">
     <app-title-card *ngFor="let result of searchResults.slice(currentPageIndex, pageSize)" [title]="result"></app-title-card>
   </div>
-{{currentPageIndex}}
+
   <mat-paginator [length]="searchResults.length"
                  [pageSize]="pageSize"
                  [pageSizeOptions]="[5, 10, 25, 100]"
