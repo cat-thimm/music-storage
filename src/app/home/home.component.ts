@@ -4,7 +4,7 @@ import {MusicService} from "../common/services/music.service";
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss', '../../styles.scss']
 })
 export class HomeComponent {
   dropdownGenre = this.musicService.dropdownGenre
@@ -15,6 +15,9 @@ export class HomeComponent {
 
   searchResults = this.musicService.searchResults
 
+  playlists = this.musicService.privatePlaylists
+
   constructor(private musicService: MusicService) {
   }
+
 }

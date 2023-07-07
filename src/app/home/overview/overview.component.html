@@ -1,3 +1,5 @@
+<script src="../add-song/add-song.component.ts"></script>
+<script src="../home.component.ts"></script>
 <mat-card-content class="col">
   <mat-form-field class="search-wrapper">
     <input
@@ -9,6 +11,7 @@
     />
     <mat-icon matPrefix>search</mat-icon>
   </mat-form-field>
+  <h2>Suche filtern</h2>
   <div class="row">
     <app-dropdown [dropdown]="dropdownGenre" title="Genre"></app-dropdown>
     <app-dropdown [dropdown]="dropdownArtist" title="Artist"></app-dropdown>

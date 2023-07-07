@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Title} from "../models/title";
+import {Playlist} from "../models/playlist";
 
 @Injectable({
   providedIn: 'root'
@@ -102,6 +103,27 @@ export class MusicService {
       label: {id: 1, name: 'Nina Chuba', email: 'mail@mail.de', biography: 'LOL'}
     },
   ]
+
+  privatePlaylists: Playlist[] = [{
+    id: 1,
+    name: 'My Favourite Songs',
+    titles: [this.searchResults[0], this.searchResults[1]]
+  },
+    {
+      id: 2,
+      name: 'Summer Vibes',
+      titles: [this.searchResults[0], this.searchResults[1]]
+    },
+    {
+      id: 3,
+      name: 'Study Music',
+      titles: [this.searchResults[0], this.searchResults[1]]
+    },{
+      id: 3,
+      name: 'Study Music',
+      titles: [this.searchResults[0], this.searchResults[1]]
+    }]
+  publicPlaylists = []
 
   constructor() {
   }

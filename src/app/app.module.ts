@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 import {AppComponent} from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -12,6 +12,8 @@ import { HomeComponent } from './home/home.component';
 import { DropdownComponent } from './home/dropdown/dropdown.component';
 import { OverviewComponent } from './home/overview/overview.component';
 import { TitleCardComponent } from './home/overview/title-card/title-card.component';
+import { PlaylistsComponent } from './home/playlists/playlists.component';
+import { AddSongComponent } from './home/add-song/add-song.component';
 
 @NgModule({
   imports: [
@@ -19,7 +21,8 @@ import { TitleCardComponent } from './home/overview/title-card/title-card.compon
     BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
-    MaterialModule
+    MaterialModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     AppComponent,
@@ -28,7 +31,9 @@ import { TitleCardComponent } from './home/overview/title-card/title-card.compon
     HomeComponent,
     DropdownComponent,
     OverviewComponent,
-    TitleCardComponent
+    TitleCardComponent,
+    PlaylistsComponent,
+    AddSongComponent,
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -2,7 +2,9 @@
   display: flex;
   align-items: flex-start;
   width: 100%;
+
 }
+
 
 mat-tab-group {
   width: 100%;
@@ -16,6 +18,8 @@ mat-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: sticky;
+  top: 0;
 }
 
 

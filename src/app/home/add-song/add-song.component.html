@@ -1,0 +1,33 @@
+<mat-stepper linear #stepper>
+  <mat-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template matStepLabel>Song-Daten</ng-template>
+      <mat-form-field>
+        <mat-label>Song Title</mat-label>
+        <input matInput placeholder="Song Title" formControlName="songName" required>
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>WAV-Datei</mat-label>
+        <input matInput placeholder="Noch keine Datei gewählt" formControlName="file" required>
+
+        <mat-icon matPrefix>upload</mat-icon>
+      </mat-form-field>
+      <div>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+    </form>
+
+
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup" label="Füge Tags hinzu">
+    <form [formGroup]="secondFormGroup"></form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Vorschau</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-stepper>
