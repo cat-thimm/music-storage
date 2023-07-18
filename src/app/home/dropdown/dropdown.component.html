@@ -1,8 +1,11 @@
-<mat-form-field class="select-wrapper">
-  <mat-label>{{title}}</mat-label>
-  <mat-select>
-    <mat-option *ngFor="let option of dropdown" [value]="option">
-      {{option}}
-    </mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="select-wrapper">
+  <mat-form-field>
+    <mat-label>{{title}}</mat-label>
+    <mat-select>
+      <mat-option *ngFor="let option of dropdown" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+</div>

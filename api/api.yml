@@ -1,0 +1,559 @@
+openapi: "3.0.1"
+info:
+  title: OpenAPI definition
+  version: v0
+security:
+  - BasicAuth: [ ]
+paths:
+  /login:
+    post:
+      summary: Logs in user
+      operationId: login
+      tags:
+        - user-controller
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/AuthenticationView'
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/UserView'
+  /mood:
+    get:
+      summary: Returns all moods
+      operationId: getMoods
+      tags:
+        - mood-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MoodView'
+  /owner:
+    get:
+      summary: Returns all owners of song titles
+      operationId: getOwners
+      tags:
+        - owner-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OwnerView'
+  /label:
+    get:
+      summary: Returns all labels
+      operationId: getLabels
+      tags:
+        - label-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LabelView'
+  /audio:
+    get:
+      summary: Returns all audio files
+      operationId: getAudios
+      tags:
+        - audio-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AudioView'
+  /audio-title-link:
+    get:
+      summary: Returns all audio files of a specific song
+      operationId: getAudioTitleLinks
+      tags:
+        - audio-title-link-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AudioView'
+  /public-playlist:
+    get:
+      summary: Returns all public playlists
+      operationId: getPublicPlaylists
+      tags:
+        - public-playlist-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicPlaylistView'
+  /instrument:
+    get:
+      summary: Returns all instruments
+      operationId: getInstruments
+      tags:
+        - instrument-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/InstrumentView'
+  /owner-title-link:
+    get:
+      summary: Returns the owner of a title
+      operationId: getOwnerOfTitle
+      tags:
+        - owner-title-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/OwnerTitleLinkView'
+  /title:
+    get:
+      summary: Returns all titles
+      operationId: getTitles
+      tags:
+        - title-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TitleView'
+  /artist-title-link:
+    get:
+      summary: Returns the composer of tile
+      operationId: getArtistOfTitle
+      tags:
+        - artist-title-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/ArtistTitleLinkView'
+  /artist:
+    get:
+      summary: Returns all Artists
+      operationId: getArtists
+      tags:
+        - artist-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ArtistView'
+  /genre-title-link:
+    get:
+      summary: Returns the genres of a specific title
+      operationId: getGenreOfTitle
+      tags:
+        - genre-title-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/GenreTitleLinkView'
+  /genre:
+    get:
+      summary: Returns the genres of a specific title
+      operationId: getGenres
+      tags:
+        - genre-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GenreTitleLinkView'
+  /album-title-link:
+    get:
+      summary: Returns the titles of a specific album
+      operationId: getAlbumOfTitle
+      tags:
+        - album-title-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/AlbumTitleLinkView'
+  /album:
+    get:
+      summary: Returns all albums
+      operationId: getAlbums
+      tags:
+        - album-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AlbumView'
+  /presskit:
+    get:
+      summary: Returns all presskits
+      operationId: getPresskits
+      tags:
+        - presskit-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PresskitView'
+  /private-playlist-title-link:
+    get:
+      summary: Returns titles of a specific public playlist
+      operationId: getTitlesOfPrivatePlaylist
+      tags:
+        - private-playlist-title-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/PrivatePlaylistTitleLinkView'
+  /private-playlist:
+    get:
+      summary: Returns all private playlists
+      operationId: getPrivatePlaylists
+      tags:
+        - private-playlist-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrivatePlaylistView'
+  /user:
+    get:
+      summary: Returns all users
+      operationId: getUsers
+      tags:
+        - user-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UserView'
+    post:
+      summary: Creates user
+      operationId: createUser
+      tags:
+        - user-controller
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/UserView'
+      responses:
+        201:
+          description: 'User created.'
+  /download:
+    get:
+      summary: Returns all downloads
+      operationId: getDownloads
+      tags:
+        - download-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                $ref: '#/components/schemas/DownloadView'
+
+
+
+components:
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
+  schemas:
+    AuthenticationView:
+      type: object
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+    AudioView:
+      type: object
+      properties:
+        id:
+          type: integer
+        label:
+          $ref: '#/components/schemas/LabelView'
+        mp3:
+          type: string
+          format: byte
+        wav:
+          type: string
+          format: byte
+    PublicPlaylistView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        text:
+          type: string
+        previewPicture:
+          type: string
+          format: byte
+        visible:
+          type: boolean
+    InstrumentView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    MoodView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    OwnerView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    LabelView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        password:
+          type: string
+        email:
+          type: string
+        biography:
+          type: string
+    OwnerTitleLinkView:
+      type: object
+      properties:
+        id:
+          type: integer
+        titleId:
+          type: integer
+        ownerId:
+          type: integer
+    TitleView:
+      type: object
+      properties:
+        id:
+          type: integer
+        label:
+          $ref: '#components/schemas/LabelView'
+        name:
+          type: string
+        gemaNr:
+          type: string
+        bpm:
+          type: integer
+        releaseDate:
+          type: string
+          format: date
+        visible:
+          type: boolean
+        cover:
+          type: string
+          format: byte
+    ArtistTitleLinkView:
+      type: object
+      properties:
+        id:
+          type: integer
+        titleId:
+          type: integer
+        artistId:
+          type: integer
+    ArtistView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        image:
+          type: string
+          format: byte
+        biography:
+          type:
+            string
+    GenreTitleLinkView:
+      type: object
+      properties:
+        id:
+          type: integer
+        titleId:
+          type: integer
+        genreId:
+          type: integer
+    AlbumTitleLinkView:
+      type: object
+      properties:
+        id:
+          type: integer
+        titleId:
+          type: integer
+        albumId:
+          type: integer
+    AlbumView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        text:
+          type: string
+        cover:
+          type: string
+          format: byte
+        releaseDate:
+          type: string
+          format: date
+    PresskitView:
+      type: object
+      properties:
+        id:
+          type: integer
+        image:
+          type: string
+          format: byte
+        pdf:
+          type: string
+          format: byte
+    AudioTitleLinkView:
+      type: object
+      properties:
+        id:
+          type: integer
+        titleId:
+          type: integer
+        audioId:
+          type: integer
+    PrivatePlaylistTitleLinkView:
+      type: object
+      properties:
+        id:
+          type: integer
+        titleId:
+          type: integer
+        privatePlaylistId:
+          type: integer
+    PrivatePlaylistView:
+      type: object
+      properties:
+        id:
+          type: integer
+        user:
+          $ref: '#components/schemas/UserView'
+        name:
+          type: string
+        text:
+          type: string
+        previewPicture:
+          type: string
+          format: byte
+    UserView:
+      type: object
+      properties:
+        username:
+          type: string
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+        role:
+          type: string
+          enum: [ 'LABEL', 'USER' ]
+    DownloadView:
+      type: object
+      properties:
+        id:
+          type: integer
+        userId:
+          type: integer
+        audioId:
+          type: integer
+
+
+
+
+

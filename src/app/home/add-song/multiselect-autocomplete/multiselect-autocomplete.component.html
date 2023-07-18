@@ -1,0 +1,26 @@
+<mat-form-field class="example-full-width">
+  <mat-label>Künstler</mat-label>
+  <input
+    type="text"
+    placeholder="Wähle XY"
+    aria-label="Wähle XY"
+    matInput
+    [matAutocomplete]="auto"
+    [formControlName]="formControlName"
+  />
+  <!-- <mat-hint>Enter text to find users by name</mat-hint> -->
+</mat-form-field>
+
+<mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+  <mat-option *ngFor="let option of options" [value]="selectedOptions">
+    <div (click)="optionClicked($event, option)">
+      <mat-checkbox
+        [checked]="option.selected"
+        (change)="toggleSelection(option)"
+        (click)="$event.stopPropagation()"
+      >
+        {{ option.value }}
+      </mat-checkbox>
+    </div>
+  </mat-option>
+</mat-autocomplete>

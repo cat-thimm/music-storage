@@ -1,32 +1,146 @@
+<script src="multiselect-autocomplete/multiselect-autocomplete.component.ts"></script>
 <mat-stepper linear #stepper>
-  <mat-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
+  <mat-step [stepControl]="songMetaDataGroup">
+    <form [formGroup]="songMetaDataGroup">
       <ng-template matStepLabel>Song-Daten</ng-template>
+      <p>
+        Im ersten Schritten bitten wir Sie, einen Song Titel einzugeben sowie
+        Ihren Song im WAV-Format hochzuladen.
+      </p>
+      <br />
+      <h4>Song Titel</h4>
       <mat-form-field>
-        <mat-label>Song Title</mat-label>
-        <input matInput placeholder="Song Title" formControlName="songName" required>
+        <mat-label>Song Titel</mat-label>
+        <input
+          matInput
+          placeholder="Wie heißt der Song?"
+          formControlName="songName"
+          required
+        />
       </mat-form-field>
-      <mat-form-field>
-        <mat-label>WAV-Datei</mat-label>
-        <input matInput placeholder="Noch keine Datei gewählt" formControlName="file" required>
+      <h4>WAV-Datei</h4>
+      <div class="row">
+        <div
+          class="center"
+          *ngIf="file && file.files && file.files.length > 0; else emptyFile"
+        >
+          {{ file!.files[0].name }}
+        </div>
+        <ng-template #emptyFile
+          ><div class="center">Noch keine Datei ausgewählt</div></ng-template
+        >
 
-        <mat-icon matPrefix>upload</mat-icon>
-      </mat-form-field>
-      <div>
-        <button mat-button matStepperNext>Next</button>
+        <input
+          hidden
+          type="file"
+          accept="audio/*"
+          #file
+          formControlName="file"
+          (change)="setFileData(file.files, wavFile)"
+        />
+        <button mat-button color="primary" (click)="file.click()">
+          Hochladen
+          <mat-icon matPrefix>upload</mat-icon>
+        </button>
+      </div>
+      <div class="next-button">
+        <button
+          mat-button
+          matStepperNext
+          [disabled]="songMetaDataGroup.invalid"
+        >
+          Weiter
+        </button>
       </div>
     </form>
-
-
   </mat-step>
-  <mat-step [stepControl]="secondFormGroup" label="Füge Tags hinzu">
-    <form [formGroup]="secondFormGroup"></form>
+  <mat-step [stepControl]="tagGroup" label="Füge Tags hinzu">
+    <p>
+      Bitte konfigurieren Sie Tags, um Ihren Song besser auffindbar zu machen.
+      Anhand Ihrer Eingaben kann die Suche von Songs vereinfacht werden.
+    </p>
+    <br />
+    <form [formGroup]="tagGroup" class="dropdown-wrapper">
+      <!-- <app-multiselect-autocomplete
+        formControlName="artist"
+        [options]="artists"
+      ></app-multiselect-autocomplete> -->
+<!--      <ng-select [(ngModel)]="">-->
+<!--        <ng-option *ngFor="let artist of artists" [value]="artist.id">{{-->
+<!--          artist.value-->
+<!--        }}</ng-option>-->
+<!--      </ng-select>-->
+
+      <h4>Instrumente</h4>
+      <mat-form-field class="example-full-width">
+        <mat-label>Instrumente</mat-label>
+        <input
+          type="text"
+          placeholder="Pick one"
+          aria-label="instruments"
+          matInput
+          [matAutocomplete]="autoInstruments"
+        />
+        <mat-autocomplete #autoInstruments="matAutocomplete">
+          <mat-option
+            *ngFor="let instrument of instruments"
+            [value]="instrument"
+          >
+            {{ instrument }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <h4>Tempo</h4>
+      <app-dropdown title="Wie schnell ist der Song?"></app-dropdown>
+      <h4>Stimmung des Songs</h4>
+      <app-dropdown
+        title="Wie können Sie die Stimmung beschreiben?"
+      ></app-dropdown>
+    </form>
+    <div class="next-button">
+      <button mat-button matStepperPrevious>Zurück</button>
+      <button mat-button matStepperNext [disabled]="songMetaDataGroup.invalid">
+        Weiter
+      </button>
+    </div>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Vorschau</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
+    <p>
+      Fügen Sie im letzten Schritt ein Song-Cover hinzu, um Ihren Song-Upload
+      fertigzustellen.
+    </p>
+    <br />
+    <h4>Song Cover</h4>
+    <div class="row">
+      <div
+        class="center"
+        *ngIf="
+          coverFile && coverFile.files && coverFile.files.length > 0;
+          else emptyFile
+        "
+      >
+        {{ coverFile!.files[0].name }}
+      </div>
+      <ng-template #emptyFile
+        ><div class="center">Noch keine Datei ausgewählt</div></ng-template
+      >
+
+      <input
+        hidden
+        type="file"
+        accept="image/*"
+        #coverFile
+        formControlName="file"
+        (change)="setFileData(coverFile.files, cover)"
+      />
+      <button mat-button color="primary" (click)="coverFile.click()">
+        Hochladen
+        <mat-icon matPrefix>upload</mat-icon>
+      </button>
+    </div>
+    <div class="next-button">
+      <button mat-button matStepperPrevious>Zurück</button>
       <button mat-button (click)="stepper.reset()">Reset</button>
     </div>
   </mat-step>

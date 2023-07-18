@@ -1,0 +1,17 @@
+{
+    "$schema": "node_modules/@openapitools/openapi-generator-cli/config.schema.json",
+    "spaces": 2,
+    "generator-cli": {
+        "version": "5.3.0",
+        "generators": {
+            "test-api": {
+                "packageName": "test-api",
+                "generatorName": "typescript-axios",
+                "output": "#{cwd}/src/#{name}",
+                "glob": "./api/api.yml",
+                "removeOperationIdPrefix": true,
+                "additionalProperties": "configurationPrefix=TestApi,apiModulePrefix=TestApi,stringEnums=true,useSingleRequestParameter=true,enumPropertyNaming=UPPERCASE"
+            }
+        }
+    }
+}
