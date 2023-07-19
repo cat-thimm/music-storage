@@ -142,6 +142,25 @@ export interface ArtistView {
 /**
  * 
  * @export
+ * @interface AudioDTO
+ */
+export interface AudioDTO {
+    /**
+     * 
+     * @type {LabelView}
+     * @memberof AudioDTO
+     */
+    'label'?: LabelView;
+    /**
+     * 
+     * @type {string}
+     * @memberof AudioDTO
+     */
+    'wav': string;
+}
+/**
+ * 
+ * @export
  * @interface AudioTitleLinkView
  */
 export interface AudioTitleLinkView {
@@ -447,10 +466,10 @@ export interface PrivatePlaylistView {
     'id'?: number;
     /**
      * 
-     * @type {object}
+     * @type {UserView}
      * @memberof PrivatePlaylistView
      */
-    'user'?: object;
+    'user'?: UserView;
     /**
      * 
      * @type {string}
@@ -521,10 +540,10 @@ export interface TitleView {
     'id'?: number;
     /**
      * 
-     * @type {object}
+     * @type {LabelView}
      * @memberof TitleView
      */
-    'label'?: object;
+    'label'?: LabelView;
     /**
      * 
      * @type {string}
@@ -1020,6 +1039,44 @@ export const AudioControllerApiAxiosParamCreator = function (configuration?: Con
     return {
         /**
          * 
+         * @summary Returns specific audio file
+         * @param {string} audioId The ID of the audio file to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAudioFile: async (audioId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'audioId' is not null or undefined
+            assertParamExists('getAudioFile', 'audioId', audioId)
+            const localVarPath = `/audio-file/{audioId}`
+                .replace(`{${"audioId"}}`, encodeURIComponent(String(audioId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns all audio files
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1052,6 +1109,58 @@ export const AudioControllerApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Uploads a wav file to the db
+         * @param {number} labelId 
+         * @param {any} wav 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAudio: async (labelId: number, wav: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'labelId' is not null or undefined
+            assertParamExists('postAudio', 'labelId', labelId)
+            // verify required parameter 'wav' is not null or undefined
+            assertParamExists('postAudio', 'wav', wav)
+            const localVarPath = `/audio`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+            if (labelId !== undefined) { 
+                localVarFormParams.append('labelId', labelId as any);
+            }
+    
+            if (wav !== undefined) { 
+                localVarFormParams.append('wav', wav as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -1064,12 +1173,35 @@ export const AudioControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Returns specific audio file
+         * @param {string} audioId The ID of the audio file to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAudioFile(audioId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAudioFile(audioId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Returns all audio files
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getAudios(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AudioView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAudios(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Uploads a wav file to the db
+         * @param {number} labelId 
+         * @param {any} wav 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAudio(labelId: number, wav: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudioView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudio(labelId, wav, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1084,6 +1216,16 @@ export const AudioControllerApiFactory = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Returns specific audio file
+         * @param {string} audioId The ID of the audio file to retrieve
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAudioFile(audioId: string, options?: any): AxiosPromise<string> {
+            return localVarFp.getAudioFile(audioId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Returns all audio files
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1091,8 +1233,54 @@ export const AudioControllerApiFactory = function (configuration?: Configuration
         getAudios(options?: any): AxiosPromise<Array<AudioView>> {
             return localVarFp.getAudios(options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Uploads a wav file to the db
+         * @param {number} labelId 
+         * @param {any} wav 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAudio(labelId: number, wav: any, options?: any): AxiosPromise<AudioView> {
+            return localVarFp.postAudio(labelId, wav, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for getAudioFile operation in AudioControllerApi.
+ * @export
+ * @interface AudioControllerApiGetAudioFileRequest
+ */
+export interface AudioControllerApiGetAudioFileRequest {
+    /**
+     * The ID of the audio file to retrieve
+     * @type {string}
+     * @memberof AudioControllerApiGetAudioFile
+     */
+    readonly audioId: string
+}
+
+/**
+ * Request parameters for postAudio operation in AudioControllerApi.
+ * @export
+ * @interface AudioControllerApiPostAudioRequest
+ */
+export interface AudioControllerApiPostAudioRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AudioControllerApiPostAudio
+     */
+    readonly labelId: number
+
+    /**
+     * 
+     * @type {any}
+     * @memberof AudioControllerApiPostAudio
+     */
+    readonly wav: any
+}
 
 /**
  * AudioControllerApi - object-oriented interface
@@ -1103,6 +1291,18 @@ export const AudioControllerApiFactory = function (configuration?: Configuration
 export class AudioControllerApi extends BaseAPI {
     /**
      * 
+     * @summary Returns specific audio file
+     * @param {AudioControllerApiGetAudioFileRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AudioControllerApi
+     */
+    public getAudioFile(requestParameters: AudioControllerApiGetAudioFileRequest, options?: AxiosRequestConfig) {
+        return AudioControllerApiFp(this.configuration).getAudioFile(requestParameters.audioId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Returns all audio files
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -1110,6 +1310,18 @@ export class AudioControllerApi extends BaseAPI {
      */
     public getAudios(options?: AxiosRequestConfig) {
         return AudioControllerApiFp(this.configuration).getAudios(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Uploads a wav file to the db
+     * @param {AudioControllerApiPostAudioRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AudioControllerApi
+     */
+    public postAudio(requestParameters: AudioControllerApiPostAudioRequest, options?: AxiosRequestConfig) {
+        return AudioControllerApiFp(this.configuration).postAudio(requestParameters.labelId, requestParameters.wav, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1632,6 +1844,44 @@ export const LabelControllerApiAxiosParamCreator = function (configuration?: Con
     return {
         /**
          * 
+         * @summary Creates a new label
+         * @param {LabelView} [labelView] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createLabel: async (labelView?: LabelView, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/label`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(labelView, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns all labels
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1676,6 +1926,17 @@ export const LabelControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Creates a new label
+         * @param {LabelView} [labelView] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createLabel(labelView?: LabelView, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createLabel(labelView, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Returns all labels
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1696,6 +1957,16 @@ export const LabelControllerApiFactory = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Creates a new label
+         * @param {LabelView} [labelView] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createLabel(labelView?: LabelView, options?: any): AxiosPromise<void> {
+            return localVarFp.createLabel(labelView, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Returns all labels
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -1707,12 +1978,38 @@ export const LabelControllerApiFactory = function (configuration?: Configuration
 };
 
 /**
+ * Request parameters for createLabel operation in LabelControllerApi.
+ * @export
+ * @interface LabelControllerApiCreateLabelRequest
+ */
+export interface LabelControllerApiCreateLabelRequest {
+    /**
+     * 
+     * @type {LabelView}
+     * @memberof LabelControllerApiCreateLabel
+     */
+    readonly labelView?: LabelView
+}
+
+/**
  * LabelControllerApi - object-oriented interface
  * @export
  * @class LabelControllerApi
  * @extends {BaseAPI}
  */
 export class LabelControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary Creates a new label
+     * @param {LabelControllerApiCreateLabelRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof LabelControllerApi
+     */
+    public createLabel(requestParameters: LabelControllerApiCreateLabelRequest = {}, options?: AxiosRequestConfig) {
+        return LabelControllerApiFp(this.configuration).createLabel(requestParameters.labelView, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Returns all labels
@@ -2480,6 +2777,45 @@ export const TitleControllerApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Returns titles matched against keyword
+         * @param {string} [keyword] the term you want to search for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchTitles: async (keyword?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/title/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            if (keyword !== undefined) {
+                localVarQueryParameter['keyword'] = keyword;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -2498,6 +2834,17 @@ export const TitleControllerApiFp = function(configuration?: Configuration) {
          */
         async getTitles(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TitleView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getTitles(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Returns titles matched against keyword
+         * @param {string} [keyword] the term you want to search for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchTitles(keyword?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TitleView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchTitles(keyword, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2519,8 +2866,32 @@ export const TitleControllerApiFactory = function (configuration?: Configuration
         getTitles(options?: any): AxiosPromise<Array<TitleView>> {
             return localVarFp.getTitles(options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Returns titles matched against keyword
+         * @param {string} [keyword] the term you want to search for
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchTitles(keyword?: string, options?: any): AxiosPromise<Array<TitleView>> {
+            return localVarFp.searchTitles(keyword, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for searchTitles operation in TitleControllerApi.
+ * @export
+ * @interface TitleControllerApiSearchTitlesRequest
+ */
+export interface TitleControllerApiSearchTitlesRequest {
+    /**
+     * the term you want to search for
+     * @type {string}
+     * @memberof TitleControllerApiSearchTitles
+     */
+    readonly keyword?: string
+}
 
 /**
  * TitleControllerApi - object-oriented interface
@@ -2538,6 +2909,18 @@ export class TitleControllerApi extends BaseAPI {
      */
     public getTitles(options?: AxiosRequestConfig) {
         return TitleControllerApiFp(this.configuration).getTitles(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Returns titles matched against keyword
+     * @param {TitleControllerApiSearchTitlesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TitleControllerApi
+     */
+    public searchTitles(requestParameters: TitleControllerApiSearchTitlesRequest = {}, options?: AxiosRequestConfig) {
+        return TitleControllerApiFp(this.configuration).searchTitles(requestParameters.keyword, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

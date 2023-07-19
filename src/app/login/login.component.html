@@ -1,18 +1,17 @@
-<script src="../registration/registration.component.ts"></script>
 <mat-card class="login-container">
   <mat-card-header>
     <mat-card-title>Login</mat-card-title>
   </mat-card-header>
-  <form #form="ngForm" class="col form" (submit)="loginUser()">
+  <form #form="ngForm" class="col form" (submit)="loginUser(username, password)">
     <mat-card-content class="col">
       <mat-form-field>
-        <mat-label>E-Mail</mat-label>
+        <mat-label>Name</mat-label>
         <input
-          type="email"
+          type="text"
           matInput
-          [(ngModel)]="email"
-          placeholder="E-Mail"
-          name="email"
+          [(ngModel)]="username"
+          placeholder="Name"
+          name="username"
           required
         />
       </mat-form-field>

@@ -2,7 +2,7 @@
 <p>
   <mat-toolbar color="">
     <span>Music Storage</span>
-    <button mat-button [routerLink]="['/login']">
+    <button mat-button [routerLink]="['/login']" (click)="logout()">
       <mat-icon>logout</mat-icon>
       Logout
     </button>
@@ -10,17 +10,19 @@
 </p>
 
 <div class="row">
-  <app-playlists [playlists]="playlists"></app-playlists>
+  <app-playlists [playlists]="playlists$"></app-playlists>
 
   <mat-card class="container">
     <mat-tab-group dynamicHeight color="accent">
       <mat-tab label="Songübersicht">
-        <app-overview [dropdownArtist]="dropdownArtist"
-                      [dropdownGenre]="dropdownGenre"
-                      [dropdownInstrument]="dropdownInstrument"
-                      [dropdownMood]="dropdownMood"
-                      [dropdownTempo]="dropdownTempo"
-                      [searchResults]="searchResults">
+        <app-overview
+          [dropdownArtist]="dropdownArtist$"
+          [dropdownGenre]="dropdownGenre$"
+          [dropdownInstrument]="dropdownInstrument$"
+          [dropdownMood]="dropdownMood$"
+          [dropdownTempo]="dropdownTempo$"
+          [searchResults]="searchResults$"
+        >
         </app-overview>
       </mat-tab>
       <mat-tab label="Neuer Song">
@@ -29,4 +31,3 @@
     </mat-tab-group>
   </mat-card>
 </div>
-

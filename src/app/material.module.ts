@@ -19,6 +19,7 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatAutocompleteModule} from "@angular/material/autocomplete";
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 @NgModule({
   exports: [
@@ -41,6 +42,7 @@ import {MatAutocompleteModule} from "@angular/material/autocomplete";
     MatToolbarModule,
     MatButtonToggleModule,
     MatPaginatorModule,
+    MatSlideToggleModule,
     MatStepperModule,
   ],
 })

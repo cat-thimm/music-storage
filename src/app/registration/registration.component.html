@@ -2,9 +2,9 @@
   <mat-card-header>
     <mat-card-title>Registrierung</mat-card-title>
   </mat-card-header>
-  <form #form="ngForm" class="col form">
+  <form #form="ngForm" class="col form" (submit)="register()">
     <mat-card-content class="col">
-      <mat-form-field >
+      <mat-form-field>
         <mat-label>Name</mat-label>
         <input
           type="text"
@@ -37,7 +37,21 @@
           required
         />
       </mat-form-field>
+
+      <mat-slide-toggle color="primary" [(ngModel)]="isLabel" name="isLabel">Wir sind ein Label</mat-slide-toggle>
+      <mat-form-field *ngIf="isLabel">
+        <mat-label>Biographie</mat-label>
+        <textarea
+          type="description"
+          matInput
+          placeholder="Erzähl uns etwas über eurer Label!"
+          [(ngModel)]="biography"
+          name="biography"
+          (required)="false"
+        ></textarea>
+      </mat-form-field>
     </mat-card-content>
+
     <mat-card-actions class="col">
       <button type="submit" mat-button color="primary" [disabled]="form.invalid">
         Jetzt registrieren

@@ -2,6 +2,9 @@ openapi: "3.0.1"
 info:
   title: OpenAPI definition
   version: v0
+servers:
+  - url: http://localhost:8080
+    description: server runs on port 8080
 security:
   - BasicAuth: [ ]
 paths:
@@ -68,6 +71,19 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/LabelView'
+    post:
+      summary: Creates a new label
+      operationId: createLabel
+      tags:
+        - label-controller
+      requestBody:
+        content:
+          'application/json':
+            schema:
+              $ref: '#/components/schemas/LabelView'
+      responses:
+        201:
+          description: 'Label created.'
   /audio:
     get:
       summary: Returns all audio files
@@ -83,6 +99,53 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/AudioView'
+    post:
+      summary: Uploads a wav file to the db
+      tags:
+        - audio-controller
+      operationId: postAudio
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                labelId:
+                  type: integer
+                wav:
+                  type: string
+                  format: binary
+              required:
+                - labelId
+                - wav
+      responses:
+        "200":
+          description: Represents audio from db
+          content:
+            "application/json":
+              schema:
+                $ref: '#/components/schemas/AudioView'
+  /audio-file/{audioId}:
+    get:
+      summary: Returns specific audio file
+      operationId: getAudioFile
+      parameters:
+        - name: audioId
+          in: path
+          description: The ID of the audio file to retrieve
+          required: true
+          schema:
+            type: string
+      tags:
+        - audio-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'multipart/form-data':
+              schema:
+                type: string
+                format: byte
   /audio-title-link:
     get:
       summary: Returns all audio files of a specific song
@@ -147,6 +210,28 @@ paths:
       operationId: getTitles
       tags:
         - title-controller
+      responses:
+        200:
+          description: OK
+          content:
+            'application/json':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TitleView'
+  /title/search:
+    get:
+      summary: Returns titles matched against keyword
+      operationId: searchTitles
+      tags:
+        - title-controller
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+          description: the term you want to search for
       responses:
         200:
           description: OK
@@ -353,6 +438,17 @@ components:
         wav:
           type: string
           format: byte
+    AudioDTO:
+      required:
+        - wav
+      type: object
+      properties:
+        label:
+          $ref: '#/components/schemas/LabelView'
+        wav:
+          type: string
+          format: byte
+
     PublicPlaylistView:
       type: object
       properties:
@@ -416,7 +512,7 @@ components:
         id:
           type: integer
         label:
-          $ref: '#components/schemas/LabelView'
+          $ref: '#/components/schemas/LabelView'
         name:
           type: string
         gemaNr:
@@ -521,7 +617,7 @@ components:
         id:
           type: integer
         user:
-          $ref: '#components/schemas/UserView'
+          $ref: '#/components/schemas/UserView'
         name:
           type: string
         text:

@@ -16,20 +16,27 @@
     <app-dropdown [dropdown]="dropdownGenre" title="Genre"></app-dropdown>
     <app-dropdown [dropdown]="dropdownArtist" title="Artist"></app-dropdown>
     <app-dropdown [dropdown]="dropdownMood" title="Mood"></app-dropdown>
-    <app-dropdown [dropdown]="dropdownInstrument" title="Instrument"></app-dropdown>
+    <app-dropdown
+      [dropdown]="dropdownInstrument"
+      title="Instrument"
+    ></app-dropdown>
     <app-dropdown [dropdown]="dropdownTempo" title="Tempo"></app-dropdown>
   </div>
 
-  <div class="title-wrapper" *ngIf="searchResults.length > 0">
-    <app-title-card *ngFor="let result of currentResults()" [title]="result"></app-title-card>
+  <div class="title-wrapper" *ngIf="searchResults && searchResults.length > 0">
+    <app-title-card
+      *ngFor="let result of currentResults()"
+      [title]="result"
+    ></app-title-card>
   </div>
 
-  <mat-paginator [length]="searchResults.length"
-                 [pageSize]="pageSize"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 [pageIndex]="currentPageIndex"
-                 (page)="handlePageEvent($event)"
-                 aria-label="Select page">
+  <mat-paginator
+    [length]="searchResults?.length || 0"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    [pageIndex]="currentPageIndex"
+    (page)="handlePageEvent($event)"
+    aria-label="Select page"
+  >
   </mat-paginator>
-
 </mat-card-content>
