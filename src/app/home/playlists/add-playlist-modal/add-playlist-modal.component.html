@@ -63,6 +63,16 @@
           {{ result.name }}
         </mat-checkbox>
 
+        <div *ngIf="showToggleVisibility">
+          <h4>Sichtbarkeit</h4>
+          <mat-slide-toggle
+            color="primary"
+            [(ngModel)]="isVisible"
+            name="isLabel"
+            >Für Nutzer sichtbar</mat-slide-toggle
+          >
+        </div>
+
         <div class="button-wrapper">
           <button mat-button (click)="closeModal()">Abbrechen</button>
           <button mat-raised-button color="primary" type="submit">

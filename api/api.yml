@@ -41,6 +41,21 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/MoodView"
+  /genre:
+    get:
+      summary: Returns all genres
+      operationId: getGenres
+      tags:
+        - genre-controller
+      responses:
+        200:
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/GenreView"
   /owner:
     get:
       summary: Returns all owners of song titles
@@ -58,8 +73,15 @@ paths:
                   $ref: "#/components/schemas/OwnerView"
   /label:
     get:
-      summary: Returns all labels
-      operationId: getLabels
+      summary: Returns label
+      operationId: getLabel
+      parameters:
+        - name: labelId
+          in: query
+          description: The ID of the label
+          required: true
+          schema:
+            type: integer
       tags:
         - label-controller
       responses:
@@ -68,9 +90,7 @@ paths:
           content:
             "application/json":
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/LabelView"
+                $ref: "#/components/schemas/LabelView"
     post:
       summary: Creates a new label
       operationId: createLabel
@@ -84,6 +104,10 @@ paths:
       responses:
         201:
           description: "Label created."
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/LabelView"
   /audio:
     get:
       summary: Returns all audio files
@@ -125,6 +149,20 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/AudioView"
+  /title-upload:
+    post:
+      summary: Create a new title
+      operationId: uploadTitle
+      tags:
+        - title-controller
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/TitleUploadDto"
+      responses:
+        "201":
+          description: Successfully created new Song.
   /audio-file/{audioId}:
     get:
       summary: Returns specific audio file
@@ -183,6 +221,19 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/PublicPlaylistView"
+    post:
+      summary: Creates public playlist
+      operationId: createPublicPlaylist
+      tags:
+        - public-playlist-controller
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PublicPlaylistCreateDTO"
+      responses:
+        201:
+          description: "Public Playlist created."
   /instrument:
     get:
       summary: Returns all instruments
@@ -249,23 +300,17 @@ paths:
           in: query
           required: false
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: genre
           in: query
           required: false
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: instrument
           in: query
           required: false
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
 
           description: the song tempo you search for
       responses:
@@ -318,21 +363,6 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/GenreTitleLinkView"
-  /genre:
-    get:
-      summary: Returns the genres of a specific title
-      operationId: getGenres
-      tags:
-        - genre-controller
-      responses:
-        200:
-          description: OK
-          content:
-            "application/json":
-              schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/GenreTitleLinkView"
   /album-title-link:
     get:
       summary: Returns the titles of a specific album
@@ -472,6 +502,58 @@ components:
       type: http
       scheme: basic
   schemas:
+    TitleUploadDto:
+      type: object
+      required:
+        - label_id
+        - name
+        - gemaNr
+        - visible
+        - releaseDate
+        - moods
+        - instruments
+        - genres
+        - cover
+        - bpm
+        - genres
+        - artists
+        - wav
+      properties:
+        label_id:
+          type: integer
+        name:
+          type: string
+        gemaNr:
+          type: string
+        bpm:
+          type: integer
+        releaseDate:
+          type: string
+          format: date
+        visible:
+          type: boolean
+        wav:
+          type: string
+          format: byte
+        cover:
+          type: string
+          format: byte
+        moods:
+          type: array
+          items:
+            type: string
+        genres:
+          type: array
+          items:
+            type: string
+        artists:
+          type: array
+          items:
+            type: string
+        instruments:
+          type: array
+          items:
+            type: string
     AuthenticationView:
       type: object
       properties:
@@ -532,7 +614,16 @@ components:
           format: byte
         visible:
           type: boolean
+        label:
+          $ref: "#/components/schemas/LabelView"
     InstrumentView:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+    GenreView:
       type: object
       properties:
         id:
@@ -707,6 +798,8 @@ components:
         role:
           type: string
           enum: ["LABEL", "USER"]
+        labelId:
+          type: integer
     DownloadView:
       type: object
       properties:
@@ -721,6 +814,15 @@ components:
       properties:
         playlist:
           $ref: "#/components/schemas/PrivatePlaylistView"
+        titles:
+          type: array
+          items:
+            type: integer
+    PublicPlaylistCreateDTO:
+      type: object
+      properties:
+        playlist:
+          $ref: "#/components/schemas/PublicPlaylistView"
         titles:
           type: array
           items:

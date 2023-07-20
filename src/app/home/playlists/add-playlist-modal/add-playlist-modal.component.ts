@@ -1,5 +1,10 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PrivatePlaylistCreateDTO, TitleView } from 'src/api';
+import {
+  LabelControllerApi,
+  PrivatePlaylistCreateDTO,
+  TitleView,
+  UserViewRoleEnum,
+} from 'src/api';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { PlaylistService } from 'src/app/common/services/playlist.service';
 
@@ -17,16 +22,22 @@ export class AddPlaylistModalComponent implements OnInit {
   playlistName = '';
   description = '';
   cover: any | null = null;
+  showToggleVisibility = false;
+  isVisible = false;
 
   constructor(
     private playlistService: PlaylistService,
     private authenticationService: AuthenticationService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    if (this.authenticationService.userRole === UserViewRoleEnum.LABEL) {
+      this.showToggleVisibility = true;
+    }
+    console.log('labelid', this.authenticationService.labelId);
+  }
 
   ngOnChanges(): void {
-    console.log('Changed ');
     this.resultsWithCheck = this.searchResults?.map((result) => ({
       id: result.id,
       name: result.name,
@@ -54,18 +65,39 @@ export class AddPlaylistModalComponent implements OnInit {
     reader.readAsDataURL(this.cover);
 
     reader.onload = async () => {
-      const playlist: PrivatePlaylistCreateDTO = {
-        playlist: {
-          name: this.playlistName,
-          text: this.description,
-          // @ts-ignore
-          previewPicture: reader.result.split(',')[1],
-          user: this.authenticationService.user,
-        },
-        titles: titles,
-      };
+      if (this.authenticationService.userRole === UserViewRoleEnum.LABEL) {
+        const labelController = new LabelControllerApi();
+        console.log(this.authenticationService.labelId);
 
-      await this.playlistService.createPrivatePlaylist(playlist);
+        const labels = await labelController.getLabel({
+          labelId: this.authenticationService.labelId || 0,
+        });
+
+        await this.playlistService.createPublicPlaylist({
+          titles: titles,
+          playlist: {
+            visible: this.isVisible,
+            label: labels.data,
+            name: this.playlistName,
+            // @ts-ignore
+            previewPicture: reader.result.split(',')[1],
+            text: this.description,
+          },
+        });
+      } else {
+        const playlist: PrivatePlaylistCreateDTO = {
+          playlist: {
+            name: this.playlistName,
+            text: this.description,
+            // @ts-ignore
+            previewPicture: reader.result.split(',')[1],
+            user: this.authenticationService.user,
+          },
+          titles: titles,
+        };
+        await this.playlistService.createPrivatePlaylist(playlist);
+      }
+
       this.closeModal();
     };
   }

@@ -15,3 +15,13 @@
   margin-bottom: 20px;
 }
 
+.search-button {
+  width: min-content;
+  // align-self: flex-end;
+  white-space: nowrap;
+}
+
+.select-wrapper {
+  //max-width: 200px;
+  margin-right: 20px;
+}

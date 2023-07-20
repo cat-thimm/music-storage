@@ -1,14 +1,14 @@
-import {Component} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
-import {UserViewRoleEnum} from "../../api";
+import { UserViewRoleEnum } from '../../api';
 
-import {AuthenticationService} from "../common/services/authentication.service";
+import { AuthenticationService } from '../common/services/authentication.service';
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
-  styleUrls: ['./registration.component.scss', '../../styles.scss']
+  styleUrls: ['./registration.component.scss', '../../styles.scss'],
 })
 export class RegistrationComponent {
   name = '';
@@ -17,30 +17,34 @@ export class RegistrationComponent {
   isLabel = false;
   biography = '';
 
-  constructor(private authenticationService: AuthenticationService, private router: Router) {
-  }
+  constructor(
+    private authenticationService: AuthenticationService,
+    private router: Router
+  ) {}
 
   async register() {
     try {
+      if (this.isLabel) {
+        await this.authenticationService
+          .createLabel({
+            name: this.name,
+            email: this.email,
+            password: this.password,
+            biography: this.biography,
+          })
+          .catch((e) => console.log(e));
+      }
+
       await this.authenticationService.register({
         username: this.name,
         email: this.email,
         password: this.password,
-        role: this.isLabel ? UserViewRoleEnum.LABEL : UserViewRoleEnum.USER
-      })
+        role: this.isLabel ? UserViewRoleEnum.LABEL : UserViewRoleEnum.USER,
+      });
 
-      if (this.isLabel) {
-        await this.authenticationService.createLabel({
-          name: this.name,
-          email: this.email,
-          password: this.password,
-          biography: this.biography
-        }).catch(e => console.log(e))
-      }
-      this.router.navigate(['/home'])
+      this.router.navigate(['/home']);
     } catch (e) {
-      console.error("[Registration Component]: Error ", e)
+      console.error('[Registration Component]: Error ', e);
     }
-
   }
 }

@@ -1,5 +1,3 @@
-<script src="../add-song/add-song.component.ts"></script>
-<script src="../home.component.ts"></script>
 <mat-card-content class="col">
   <mat-form-field class="search-wrapper">
     <input
@@ -8,20 +6,76 @@
       placeholder="Suchbegriff"
       name="email"
       required
+      [(ngModel)]="searchString"
+      (keyup.enter)="search()"
     />
     <mat-icon matPrefix>search</mat-icon>
   </mat-form-field>
   <h2>Suche filtern</h2>
   <div class="row">
-    <app-dropdown [dropdown]="dropdownGenre" title="Genre"></app-dropdown>
-    <app-dropdown [dropdown]="dropdownArtist" title="Artist"></app-dropdown>
-    <app-dropdown [dropdown]="dropdownMood" title="Mood"></app-dropdown>
-    <app-dropdown
-      [dropdown]="dropdownInstrument"
-      title="Instrument"
-    ></app-dropdown>
-    <app-dropdown [dropdown]="dropdownTempo" title="Tempo"></app-dropdown>
+    <div class="select-wrapper">
+      <mat-form-field>
+        <mat-label>Genre</mat-label>
+        <mat-select [(value)]="selectedGenre">
+          <mat-option *ngFor="let option of dropdownGenre" [value]="option.id">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="select-wrapper">
+      <mat-form-field>
+        <mat-label>Artist</mat-label>
+        <mat-select [(ngModel)]="selectedArtist">
+          <mat-option
+            *ngFor="let option of dropdownArtist"
+            [value]="option.name"
+          >
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="select-wrapper">
+      <mat-form-field>
+        <mat-label>Mood</mat-label>
+        <mat-select [(ngModel)]="selectedMood">
+          <mat-option *ngFor="let option of dropdownMood" [value]="option.id">
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    <div class="select-wrapper">
+      <mat-form-field>
+        <mat-label>Instrument</mat-label>
+        <mat-select [(ngModel)]="selectedInstrument">
+          <mat-option
+            *ngFor="let option of dropdownInstrument"
+            [value]="option.id"
+          >
+            {{ option.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field>
+      <input
+        type="number"
+        matInput
+        placeholder="Tempo (in bpm)"
+        name="tempo"
+        required
+        min="0"
+        max="300"
+        [(ngModel)]="tempo"
+      />
+    </mat-form-field>
   </div>
+  <button mat-button color="primary" class="search-button" (click)="search()">
+    Songtitel Suchen
+  </button>
 
   <div class="title-wrapper" *ngIf="searchResults && searchResults.length > 0">
     <app-title-card

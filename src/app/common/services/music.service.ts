@@ -4,6 +4,7 @@ import {
   AudioControllerApi,
   AudioView,
   TitleControllerApi,
+  TitleControllerApiSearchTitlesRequest,
   TitleView,
 } from 'src/api';
 
@@ -29,15 +30,36 @@ export class MusicService {
 
   async downloadSong(audioId: string): Promise<any | null> {
     try {
-      const response = await this.audioController.getAudioFile({audioId}, {responseType: 'blob'})
+      const response = await this.audioController.getAudioFile(
+        { audioId },
+        { responseType: 'blob' }
+      );
 
-      if(response.data) {
-        return response.data
+      if (response.data) {
+        return response.data;
       }
     } catch (e) {
       console.error('[music-service]', e);
     }
-    return null
+    return null;
   }
 
+  async searchTitle(searchQuery: TitleControllerApiSearchTitlesRequest) {
+    try {
+      const response = await this.titleController.searchTitles({
+        keyword: searchQuery.keyword,
+        genre: searchQuery.genre,
+        instrument: searchQuery.instrument,
+        mood: searchQuery.mood,
+        tempo: searchQuery.tempo,
+      });
+
+      if (response.data) {
+        return response.data;
+      }
+    } catch (e) {
+      console.error('[music-service]', e);
+    }
+    return null;
+  }
 }

@@ -15,6 +15,7 @@ export class AuthenticationService {
   labelController: LabelControllerApi = new LabelControllerApi();
   user?: UserView = undefined;
   userRole?: UserViewRoleEnum = undefined;
+  labelId?: number;
 
   async login(username: string, password: string) {
     try {
@@ -25,6 +26,7 @@ export class AuthenticationService {
       if (response.data) {
         this.user = response.data;
         this.userRole = response.data.role;
+        this.labelId = response.data.labelId;
         localStorage.setItem('token', btoa(`${username}:${password}`));
       }
     } catch (e) {
@@ -44,7 +46,12 @@ export class AuthenticationService {
 
   async createLabel(label: LabelView) {
     try {
-      await this.labelController.createLabel({ labelView: label });
+      const response = await this.labelController.createLabel({
+        labelView: label,
+      });
+      if (response.data) {
+        this.labelId = response.data.id;
+      }
     } catch (e) {
       console.error('[authentication-service] ', e);
     }

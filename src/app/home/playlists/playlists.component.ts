@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { PrivatePlaylistView, TitleView } from 'src/api';
+import { PrivatePlaylistView, PublicPlaylistView, TitleView } from 'src/api';
 
 @Component({
   selector: 'app-playlists',
@@ -7,7 +7,7 @@ import { PrivatePlaylistView, TitleView } from 'src/api';
   styleUrls: ['./playlists.component.scss'],
 })
 export class PlaylistsComponent {
-  @Input() playlists: PrivatePlaylistView[] = [];
+  @Input() playlists: PrivatePlaylistView[] | PublicPlaylistView[] | null = [];
   @Input() searchResults: TitleView[] | null = [];
 
   showModal = false;

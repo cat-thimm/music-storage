@@ -299,6 +299,25 @@ export interface GenreTitleLinkView {
 /**
  * 
  * @export
+ * @interface GenreView
+ */
+export interface GenreView {
+    /**
+     * 
+     * @type {number}
+     * @memberof GenreView
+     */
+    'id'?: number;
+    /**
+     * 
+     * @type {string}
+     * @memberof GenreView
+     */
+    'name'?: string;
+}
+/**
+ * 
+ * @export
  * @interface InstrumentDTO
  */
 export interface InstrumentDTO {
@@ -550,6 +569,25 @@ export interface PrivatePlaylistView {
 /**
  * 
  * @export
+ * @interface PublicPlaylistCreateDTO
+ */
+export interface PublicPlaylistCreateDTO {
+    /**
+     * 
+     * @type {PublicPlaylistView}
+     * @memberof PublicPlaylistCreateDTO
+     */
+    'playlist'?: PublicPlaylistView;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof PublicPlaylistCreateDTO
+     */
+    'titles'?: Array<number>;
+}
+/**
+ * 
+ * @export
  * @interface PublicPlaylistView
  */
 export interface PublicPlaylistView {
@@ -583,6 +621,91 @@ export interface PublicPlaylistView {
      * @memberof PublicPlaylistView
      */
     'visible'?: boolean;
+    /**
+     * 
+     * @type {LabelView}
+     * @memberof PublicPlaylistView
+     */
+    'label'?: LabelView;
+}
+/**
+ * 
+ * @export
+ * @interface TitleUploadDto
+ */
+export interface TitleUploadDto {
+    /**
+     * 
+     * @type {number}
+     * @memberof TitleUploadDto
+     */
+    'label_id': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TitleUploadDto
+     */
+    'name': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TitleUploadDto
+     */
+    'gemaNr': string;
+    /**
+     * 
+     * @type {number}
+     * @memberof TitleUploadDto
+     */
+    'bpm': number;
+    /**
+     * 
+     * @type {string}
+     * @memberof TitleUploadDto
+     */
+    'releaseDate': string;
+    /**
+     * 
+     * @type {boolean}
+     * @memberof TitleUploadDto
+     */
+    'visible': boolean;
+    /**
+     * 
+     * @type {string}
+     * @memberof TitleUploadDto
+     */
+    'wav': string;
+    /**
+     * 
+     * @type {string}
+     * @memberof TitleUploadDto
+     */
+    'cover': string;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TitleUploadDto
+     */
+    'moods': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TitleUploadDto
+     */
+    'genres': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TitleUploadDto
+     */
+    'artists': Array<string>;
+    /**
+     * 
+     * @type {Array<string>}
+     * @memberof TitleUploadDto
+     */
+    'instruments': Array<string>;
 }
 /**
  * 
@@ -669,6 +792,12 @@ export interface UserView {
      * @memberof UserView
      */
     'role'?: UserViewRoleEnum;
+    /**
+     * 
+     * @type {number}
+     * @memberof UserView
+     */
+    'labelId'?: number;
 }
 
 /**
@@ -1596,7 +1725,7 @@ export const GenreControllerApiAxiosParamCreator = function (configuration?: Con
     return {
         /**
          * 
-         * @summary Returns the genres of a specific title
+         * @summary Returns all genres
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
@@ -1640,11 +1769,11 @@ export const GenreControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @summary Returns the genres of a specific title
+         * @summary Returns all genres
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getGenres(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GenreTitleLinkView>>> {
+        async getGenres(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GenreView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getGenres(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1660,11 +1789,11 @@ export const GenreControllerApiFactory = function (configuration?: Configuration
     return {
         /**
          * 
-         * @summary Returns the genres of a specific title
+         * @summary Returns all genres
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getGenres(options?: any): AxiosPromise<Array<GenreTitleLinkView>> {
+        getGenres(options?: any): AxiosPromise<Array<GenreView>> {
             return localVarFp.getGenres(options).then((request) => request(axios, basePath));
         },
     };
@@ -1679,7 +1808,7 @@ export const GenreControllerApiFactory = function (configuration?: Configuration
 export class GenreControllerApi extends BaseAPI {
     /**
      * 
-     * @summary Returns the genres of a specific title
+     * @summary Returns all genres
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof GenreControllerApi
@@ -1940,11 +2069,14 @@ export const LabelControllerApiAxiosParamCreator = function (configuration?: Con
         },
         /**
          * 
-         * @summary Returns all labels
+         * @summary Returns label
+         * @param {number} labelId The ID of the label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLabels: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getLabel: async (labelId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'labelId' is not null or undefined
+            assertParamExists('getLabel', 'labelId', labelId)
             const localVarPath = `/label`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1960,6 +2092,10 @@ export const LabelControllerApiAxiosParamCreator = function (configuration?: Con
             // authentication BasicAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            if (labelId !== undefined) {
+                localVarQueryParameter['labelId'] = labelId;
+            }
 
 
     
@@ -1989,18 +2125,19 @@ export const LabelControllerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createLabel(labelView?: LabelView, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createLabel(labelView?: LabelView, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelView>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createLabel(labelView, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
-         * @summary Returns all labels
+         * @summary Returns label
+         * @param {number} labelId The ID of the label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getLabels(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<LabelView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getLabels(options);
+        async getLabel(labelId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<LabelView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getLabel(labelId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2020,17 +2157,18 @@ export const LabelControllerApiFactory = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createLabel(labelView?: LabelView, options?: any): AxiosPromise<void> {
+        createLabel(labelView?: LabelView, options?: any): AxiosPromise<LabelView> {
             return localVarFp.createLabel(labelView, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @summary Returns all labels
+         * @summary Returns label
+         * @param {number} labelId The ID of the label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getLabels(options?: any): AxiosPromise<Array<LabelView>> {
-            return localVarFp.getLabels(options).then((request) => request(axios, basePath));
+        getLabel(labelId: number, options?: any): AxiosPromise<LabelView> {
+            return localVarFp.getLabel(labelId, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2047,6 +2185,20 @@ export interface LabelControllerApiCreateLabelRequest {
      * @memberof LabelControllerApiCreateLabel
      */
     readonly labelView?: LabelView
+}
+
+/**
+ * Request parameters for getLabel operation in LabelControllerApi.
+ * @export
+ * @interface LabelControllerApiGetLabelRequest
+ */
+export interface LabelControllerApiGetLabelRequest {
+    /**
+     * The ID of the label
+     * @type {number}
+     * @memberof LabelControllerApiGetLabel
+     */
+    readonly labelId: number
 }
 
 /**
@@ -2070,13 +2222,14 @@ export class LabelControllerApi extends BaseAPI {
 
     /**
      * 
-     * @summary Returns all labels
+     * @summary Returns label
+     * @param {LabelControllerApiGetLabelRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof LabelControllerApi
      */
-    public getLabels(options?: AxiosRequestConfig) {
-        return LabelControllerApiFp(this.configuration).getLabels(options).then((request) => request(this.axios, this.basePath));
+    public getLabel(requestParameters: LabelControllerApiGetLabelRequest, options?: AxiosRequestConfig) {
+        return LabelControllerApiFp(this.configuration).getLabel(requestParameters.labelId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2808,6 +2961,44 @@ export const PublicPlaylistControllerApiAxiosParamCreator = function (configurat
     return {
         /**
          * 
+         * @summary Creates public playlist
+         * @param {PublicPlaylistCreateDTO} [publicPlaylistCreateDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPublicPlaylist: async (publicPlaylistCreateDTO?: PublicPlaylistCreateDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/public-playlist`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(publicPlaylistCreateDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns all public playlists
          * @param {number} [labelId] label id to find specific playlist for label
          * @param {*} [options] Override http request option.
@@ -2857,6 +3048,17 @@ export const PublicPlaylistControllerApiFp = function(configuration?: Configurat
     return {
         /**
          * 
+         * @summary Creates public playlist
+         * @param {PublicPlaylistCreateDTO} [publicPlaylistCreateDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createPublicPlaylist(publicPlaylistCreateDTO?: PublicPlaylistCreateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPublicPlaylist(publicPlaylistCreateDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Returns all public playlists
          * @param {number} [labelId] label id to find specific playlist for label
          * @param {*} [options] Override http request option.
@@ -2878,6 +3080,16 @@ export const PublicPlaylistControllerApiFactory = function (configuration?: Conf
     return {
         /**
          * 
+         * @summary Creates public playlist
+         * @param {PublicPlaylistCreateDTO} [publicPlaylistCreateDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPublicPlaylist(publicPlaylistCreateDTO?: PublicPlaylistCreateDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.createPublicPlaylist(publicPlaylistCreateDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Returns all public playlists
          * @param {number} [labelId] label id to find specific playlist for label
          * @param {*} [options] Override http request option.
@@ -2888,6 +3100,20 @@ export const PublicPlaylistControllerApiFactory = function (configuration?: Conf
         },
     };
 };
+
+/**
+ * Request parameters for createPublicPlaylist operation in PublicPlaylistControllerApi.
+ * @export
+ * @interface PublicPlaylistControllerApiCreatePublicPlaylistRequest
+ */
+export interface PublicPlaylistControllerApiCreatePublicPlaylistRequest {
+    /**
+     * 
+     * @type {PublicPlaylistCreateDTO}
+     * @memberof PublicPlaylistControllerApiCreatePublicPlaylist
+     */
+    readonly publicPlaylistCreateDTO?: PublicPlaylistCreateDTO
+}
 
 /**
  * Request parameters for getPublicPlaylists operation in PublicPlaylistControllerApi.
@@ -2910,6 +3136,18 @@ export interface PublicPlaylistControllerApiGetPublicPlaylistsRequest {
  * @extends {BaseAPI}
  */
 export class PublicPlaylistControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary Creates public playlist
+     * @param {PublicPlaylistControllerApiCreatePublicPlaylistRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PublicPlaylistControllerApi
+     */
+    public createPublicPlaylist(requestParameters: PublicPlaylistControllerApiCreatePublicPlaylistRequest = {}, options?: AxiosRequestConfig) {
+        return PublicPlaylistControllerApiFp(this.configuration).createPublicPlaylist(requestParameters.publicPlaylistCreateDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Returns all public playlists
@@ -2969,13 +3207,13 @@ export const TitleControllerApiAxiosParamCreator = function (configuration?: Con
          * @summary Returns titles matched against keyword
          * @param {string} [keyword] the term you want to search for
          * @param {number} [tempo] the song tempo you search for
-         * @param {Array<number>} [mood] 
-         * @param {Array<number>} [genre] 
-         * @param {Array<number>} [instrument] the song tempo you search for
+         * @param {number} [mood] 
+         * @param {number} [genre] 
+         * @param {number} [instrument] the song tempo you search for
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchTitles: async (keyword?: string, tempo?: number, mood?: Array<number>, genre?: Array<number>, instrument?: Array<number>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchTitles: async (keyword?: string, tempo?: number, mood?: number, genre?: number, instrument?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/title/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -3000,15 +3238,15 @@ export const TitleControllerApiAxiosParamCreator = function (configuration?: Con
                 localVarQueryParameter['tempo'] = tempo;
             }
 
-            if (mood) {
+            if (mood !== undefined) {
                 localVarQueryParameter['mood'] = mood;
             }
 
-            if (genre) {
+            if (genre !== undefined) {
                 localVarQueryParameter['genre'] = genre;
             }
 
-            if (instrument) {
+            if (instrument !== undefined) {
                 localVarQueryParameter['instrument'] = instrument;
             }
 
@@ -3017,6 +3255,44 @@ export const TitleControllerApiAxiosParamCreator = function (configuration?: Con
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Create a new title
+         * @param {TitleUploadDto} [titleUploadDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadTitle: async (titleUploadDto?: TitleUploadDto, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/title-upload`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(titleUploadDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -3048,14 +3324,25 @@ export const TitleControllerApiFp = function(configuration?: Configuration) {
          * @summary Returns titles matched against keyword
          * @param {string} [keyword] the term you want to search for
          * @param {number} [tempo] the song tempo you search for
-         * @param {Array<number>} [mood] 
-         * @param {Array<number>} [genre] 
-         * @param {Array<number>} [instrument] the song tempo you search for
+         * @param {number} [mood] 
+         * @param {number} [genre] 
+         * @param {number} [instrument] the song tempo you search for
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchTitles(keyword?: string, tempo?: number, mood?: Array<number>, genre?: Array<number>, instrument?: Array<number>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TitleView>>> {
+        async searchTitles(keyword?: string, tempo?: number, mood?: number, genre?: number, instrument?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TitleView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.searchTitles(keyword, tempo, mood, genre, instrument, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Create a new title
+         * @param {TitleUploadDto} [titleUploadDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async uploadTitle(titleUploadDto?: TitleUploadDto, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.uploadTitle(titleUploadDto, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -3082,14 +3369,24 @@ export const TitleControllerApiFactory = function (configuration?: Configuration
          * @summary Returns titles matched against keyword
          * @param {string} [keyword] the term you want to search for
          * @param {number} [tempo] the song tempo you search for
-         * @param {Array<number>} [mood] 
-         * @param {Array<number>} [genre] 
-         * @param {Array<number>} [instrument] the song tempo you search for
+         * @param {number} [mood] 
+         * @param {number} [genre] 
+         * @param {number} [instrument] the song tempo you search for
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchTitles(keyword?: string, tempo?: number, mood?: Array<number>, genre?: Array<number>, instrument?: Array<number>, options?: any): AxiosPromise<Array<TitleView>> {
+        searchTitles(keyword?: string, tempo?: number, mood?: number, genre?: number, instrument?: number, options?: any): AxiosPromise<Array<TitleView>> {
             return localVarFp.searchTitles(keyword, tempo, mood, genre, instrument, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Create a new title
+         * @param {TitleUploadDto} [titleUploadDto] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        uploadTitle(titleUploadDto?: TitleUploadDto, options?: any): AxiosPromise<void> {
+            return localVarFp.uploadTitle(titleUploadDto, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -3116,24 +3413,38 @@ export interface TitleControllerApiSearchTitlesRequest {
 
     /**
      * 
-     * @type {Array<number>}
+     * @type {number}
      * @memberof TitleControllerApiSearchTitles
      */
-    readonly mood?: Array<number>
+    readonly mood?: number
 
     /**
      * 
-     * @type {Array<number>}
+     * @type {number}
      * @memberof TitleControllerApiSearchTitles
      */
-    readonly genre?: Array<number>
+    readonly genre?: number
 
     /**
      * the song tempo you search for
-     * @type {Array<number>}
+     * @type {number}
      * @memberof TitleControllerApiSearchTitles
      */
-    readonly instrument?: Array<number>
+    readonly instrument?: number
+}
+
+/**
+ * Request parameters for uploadTitle operation in TitleControllerApi.
+ * @export
+ * @interface TitleControllerApiUploadTitleRequest
+ */
+export interface TitleControllerApiUploadTitleRequest {
+    /**
+     * 
+     * @type {TitleUploadDto}
+     * @memberof TitleControllerApiUploadTitle
+     */
+    readonly titleUploadDto?: TitleUploadDto
 }
 
 /**
@@ -3164,6 +3475,18 @@ export class TitleControllerApi extends BaseAPI {
      */
     public searchTitles(requestParameters: TitleControllerApiSearchTitlesRequest = {}, options?: AxiosRequestConfig) {
         return TitleControllerApiFp(this.configuration).searchTitles(requestParameters.keyword, requestParameters.tempo, requestParameters.mood, requestParameters.genre, requestParameters.instrument, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Create a new title
+     * @param {TitleControllerApiUploadTitleRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof TitleControllerApi
+     */
+    public uploadTitle(requestParameters: TitleControllerApiUploadTitleRequest = {}, options?: AxiosRequestConfig) {
+        return TitleControllerApiFp(this.configuration).uploadTitle(requestParameters.titleUploadDto, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

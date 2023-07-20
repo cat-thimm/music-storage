@@ -11,7 +11,7 @@
 
 <div class="row">
   <app-playlists
-    [playlists]="privatePlaylist$"
+    [playlists]="privatePlaylist$ ? privatePlaylist$ : publicPlaylists$"
     [searchResults]="searchResults$"
   ></app-playlists>
 
@@ -23,8 +23,8 @@
           [dropdownGenre]="dropdownGenre$"
           [dropdownInstrument]="dropdownInstrument$"
           [dropdownMood]="dropdownMood$"
-          [dropdownTempo]="dropdownTempo$"
           [searchResults]="searchResults$"
+          (onSearch)="searchTitle($event)"
         >
         </app-overview>
       </mat-tab>

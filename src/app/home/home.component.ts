@@ -1,6 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 
-import { ArtistView, InstrumentView, MoodView, TitleView } from 'src/api';
+import {
+  ArtistView,
+  InstrumentView,
+  MoodView,
+  PrivatePlaylistView,
+  PublicPlaylistView,
+  TitleControllerApiSearchTitlesRequest,
+  TitleView,
+  UserViewRoleEnum,
+} from 'src/api';
 
 import { AuthenticationService } from '../common/services/authentication.service';
 import { PlaylistService } from '../common/services/playlist.service';
@@ -16,12 +25,12 @@ export class HomeComponent implements OnInit {
   dropdownArtist$: ArtistView[] | null = null;
   dropdownMood$: MoodView[] | null = null;
   dropdownInstrument$: InstrumentView[] | null = [];
-  dropdownTempo$?: any = [];
   dropdownGenre$: any = [];
 
   searchResults$: TitleView[] | null = [];
 
-  privatePlaylist$: any = [];
+  privatePlaylist$: PrivatePlaylistView[] | null = null;
+  publicPlaylists$: PublicPlaylistView[] | null = null;
 
   constructor(
     private musicService: MusicService,
@@ -31,9 +40,22 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.fetchTitles();
-    this.fetchTabs();
-    this.fetchPrivatePlaylists();
+    this.init();
+  }
+
+  async init() {
+    await this.fetchTitles();
+    await this.fetchTabs();
+    if (this.authenticationService.userRole === UserViewRoleEnum.LABEL) {
+      await this.fetchPublicPlaylists();
+      console.log('this public ', this.publicPlaylists$);
+    } else {
+      await this.fetchPrivatePlaylists();
+    }
+  }
+
+  async searchTitle(searchString: TitleControllerApiSearchTitlesRequest) {
+    this.searchResults$ = await this.musicService.searchTitle(searchString);
   }
 
   async fetchTitles() {
@@ -52,6 +74,12 @@ export class HomeComponent implements OnInit {
       this.privatePlaylist$ = await this.playlistService.getPrivatePlaylists(
         this.authenticationService.user?.username
       );
+  }
+
+  async fetchPublicPlaylists() {
+    this.publicPlaylists$ = await this.playlistService.getPublicPlaylist(
+      this.authenticationService.labelId
+    );
   }
 
   logout() {
