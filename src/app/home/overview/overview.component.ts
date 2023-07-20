@@ -16,7 +16,7 @@ import {
   styleUrls: ['./overview.component.scss', '../../../styles.scss'],
 })
 export class OverviewComponent {
-  @Input() dropdownGenre: GenreView[] = [];
+  @Input() dropdownGenre: GenreView[] | null = [];
   @Input() dropdownArtist: ArtistView[] | null = [];
   @Input() dropdownMood: MoodView[] | null = [];
   @Input() dropdownInstrument: InstrumentView[] | null = [];

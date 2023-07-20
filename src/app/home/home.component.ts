@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {
   ArtistView,
+  GenreView,
   InstrumentView,
   MoodView,
   PrivatePlaylistView,
@@ -24,17 +25,17 @@ import { TabsService } from '../common/services/tabs.service';
 export class HomeComponent implements OnInit {
   dropdownArtist$: ArtistView[] | null = null;
   dropdownMood$: MoodView[] | null = null;
-  dropdownInstrument$: InstrumentView[] | null = [];
-  dropdownGenre$: any = [];
+  dropdownInstrument$: InstrumentView[] | null = null;
+  dropdownGenre$: GenreView[] | null = null;
 
-  searchResults$: TitleView[] | null = [];
+  searchResults$: TitleView[] | null = null;
 
   privatePlaylist$: PrivatePlaylistView[] | null = null;
   publicPlaylists$: PublicPlaylistView[] | null = null;
 
   constructor(
     private musicService: MusicService,
-    private authenticationService: AuthenticationService,
+    public authenticationService: AuthenticationService,
     private tabsService: TabsService,
     private playlistService: PlaylistService
   ) {}
@@ -48,7 +49,6 @@ export class HomeComponent implements OnInit {
     await this.fetchTabs();
     if (this.authenticationService.userRole === UserViewRoleEnum.LABEL) {
       await this.fetchPublicPlaylists();
-      console.log('this public ', this.publicPlaylists$);
     } else {
       await this.fetchPrivatePlaylists();
     }
@@ -84,6 +84,8 @@ export class HomeComponent implements OnInit {
 
   logout() {
     this.authenticationService.user = undefined;
+    this.authenticationService.labelId = undefined;
+    this.authenticationService.userRole = undefined;
     localStorage.clear();
   }
 }

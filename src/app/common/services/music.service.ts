@@ -5,6 +5,7 @@ import {
   AudioView,
   TitleControllerApi,
   TitleControllerApiSearchTitlesRequest,
+  TitleUploadDto,
   TitleView,
 } from 'src/api';
 
@@ -57,6 +58,15 @@ export class MusicService {
       if (response.data) {
         return response.data;
       }
+    } catch (e) {
+      console.error('[music-service]', e);
+    }
+    return null;
+  }
+
+  async createTitle(title: TitleUploadDto) {
+    try {
+      await this.titleController.uploadTitle({ titleUploadDto: title });
     } catch (e) {
       console.error('[music-service]', e);
     }

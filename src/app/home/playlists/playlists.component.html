@@ -11,7 +11,7 @@
         <button mat-button color="secondary">{{ playlist.name }}</button>
       </mat-list-item>
     </mat-list>
-    <p *ngIf="playlists && playlists.length === 0">
+    <p *ngIf="(playlists && playlists.length === 0) || !playlists">
       Noch keine Playlists erstellt.
     </p>
     <button mat-raised-button color="primary" (click)="toggleModal()">
