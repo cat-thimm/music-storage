@@ -8,6 +8,8 @@
 
 mat-tab-group {
   width: 100%;
+  display:flex;
+  flex-wrap: wrap;
 }
 
 mat-tab {

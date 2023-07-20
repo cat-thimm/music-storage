@@ -6,6 +6,6 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./dropdown.component.scss']
 })
 export class DropdownComponent {
-  @Input() dropdown: string[] = []
+  @Input() dropdown: any[] | null = []
   @Input() title: string = ''
 }

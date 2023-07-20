@@ -16,6 +16,7 @@ import { PlaylistsComponent } from './home/playlists/playlists.component';
 import { AddSongComponent } from './home/add-song/add-song.component';
 import { MultiselectAutocompleteComponent } from './home/add-song/multiselect-autocomplete/multiselect-autocomplete.component';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { AddPlaylistModalComponent } from './home/playlists/add-playlist-modal/add-playlist-modal.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
     PlaylistsComponent,
     AddSongComponent,
     MultiselectAutocompleteComponent,
+    AddPlaylistModalComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

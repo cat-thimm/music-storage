@@ -10,7 +10,10 @@
 </p>
 
 <div class="row">
-  <app-playlists [playlists]="playlists$"></app-playlists>
+  <app-playlists
+    [playlists]="privatePlaylist$"
+    [searchResults]="searchResults$"
+  ></app-playlists>
 
   <mat-card class="container">
     <mat-tab-group dynamicHeight color="accent">

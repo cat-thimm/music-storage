@@ -142,7 +142,7 @@ paths:
         200:
           description: OK
           content:
-            'multipart/form-data':
+            'audio/wav':
               schema:
                 type: string
                 format: byte
@@ -164,6 +164,13 @@ paths:
   /public-playlist:
     get:
       summary: Returns all public playlists
+      parameters:
+        - name: labelId
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: label id to find specific playlist for label
       operationId: getPublicPlaylists
       tags:
         - public-playlist-controller
@@ -232,6 +239,35 @@ paths:
           schema:
             type: string
           description: the term you want to search for
+        - name: tempo
+          in: query
+          required: false
+          schema:
+            type: integer
+          description: the song tempo you search for
+        - name: mood
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: genre
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+        - name: instrument
+          in: query
+          required: false
+          schema:
+            type: array
+            items:
+              type: integer
+
+          description: the song tempo you search for
       responses:
         200:
           description: OK
@@ -356,6 +392,13 @@ paths:
   /private-playlist:
     get:
       summary: Returns all private playlists
+      parameters:
+        - name: username
+          in: query
+          required: false
+          schema:
+            type: string
+          description: username to find specific playlist for label
       operationId: getPrivatePlaylists
       tags:
         - private-playlist-controller
@@ -448,6 +491,21 @@ components:
         wav:
           type: string
           format: byte
+    MoodDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+    GenreDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+    InstrumentDTO:
+      type: object
+      properties:
+        id:
+          type: integer
 
     PublicPlaylistView:
       type: object
@@ -512,7 +570,7 @@ components:
         id:
           type: integer
         label:
-          $ref: '#/components/schemas/LabelView'
+         $ref: '#/components/schemas/LabelView'
         name:
           type: string
         gemaNr:

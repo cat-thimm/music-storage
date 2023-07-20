@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 
-import { Title } from '../../common/models/title';
 import { PageEvent } from '@angular/material/paginator';
+import { ArtistView, InstrumentView, MoodView, TitleView } from 'src/api';
 
 @Component({
   selector: 'app-overview',
@@ -10,11 +10,11 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class OverviewComponent {
   @Input() dropdownGenre: string[] = [];
-  @Input() dropdownArtist: string[] = [];
-  @Input() dropdownMood: string[] = [];
-  @Input() dropdownInstrument: string[] = [];
+  @Input() dropdownArtist: ArtistView[] | null = [];
+  @Input() dropdownMood: MoodView[] | null = [];
+  @Input() dropdownInstrument: InstrumentView[] | null = [];
   @Input() dropdownTempo: string[] = [];
-  @Input() searchResults?: Title[] = [];
+  @Input() searchResults: TitleView[] | null = [];
 
   currentPageIndex = 0;
   pageSize = 10;
@@ -23,7 +23,7 @@ export class OverviewComponent {
     this.searchResults?.slice(
       this.currentPageIndex * this.pageSize,
       this.pageSize * (this.currentPageIndex + 1)
-    );
+    )
 
   handlePageEvent(e: PageEvent) {
     this.pageSize = e.pageSize;

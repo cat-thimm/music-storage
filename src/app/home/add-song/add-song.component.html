@@ -26,14 +26,14 @@
         >
           {{ file!.files[0].name }}
         </div>
-        <ng-template #emptyFile
-          ><div class="center">Noch keine Datei ausgewählt</div></ng-template
-        >
+        <ng-template #emptyFile>
+          <div class="center">Noch keine Datei ausgewählt</div>
+        </ng-template>
 
         <input
           hidden
           type="file"
-          accept="audio/*"
+          accept="audio/wav"
           #file
           formControlName="file"
           (change)="setFileData(file.files, wavFile)"
@@ -65,11 +65,11 @@
         formControlName="artist"
         [options]="artists"
       ></app-multiselect-autocomplete> -->
-<!--      <ng-select [(ngModel)]="">-->
-<!--        <ng-option *ngFor="let artist of artists" [value]="artist.id">{{-->
-<!--          artist.value-->
-<!--        }}</ng-option>-->
-<!--      </ng-select>-->
+      <!--      <ng-select [(ngModel)]="">-->
+      <!--        <ng-option *ngFor="let artist of artists" [value]="artist.id">{{-->
+      <!--          artist.value-->
+      <!--        }}</ng-option>-->
+      <!--      </ng-select>-->
 
       <h4>Instrumente</h4>
       <mat-form-field class="example-full-width">

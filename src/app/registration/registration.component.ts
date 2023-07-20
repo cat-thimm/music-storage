@@ -39,7 +39,7 @@ export class RegistrationComponent {
       }
       this.router.navigate(['/home'])
     } catch (e) {
-      console.log("[Registration Component]: Error ", e)
+      console.error("[Registration Component]: Error ", e)
     }
 
   }

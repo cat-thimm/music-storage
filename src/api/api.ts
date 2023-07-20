@@ -261,6 +261,19 @@ export interface DownloadView {
 /**
  * 
  * @export
+ * @interface GenreDTO
+ */
+export interface GenreDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof GenreDTO
+     */
+    'id'?: number;
+}
+/**
+ * 
+ * @export
  * @interface GenreTitleLinkView
  */
 export interface GenreTitleLinkView {
@@ -282,6 +295,19 @@ export interface GenreTitleLinkView {
      * @memberof GenreTitleLinkView
      */
     'genreId'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface InstrumentDTO
+ */
+export interface InstrumentDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof InstrumentDTO
+     */
+    'id'?: number;
 }
 /**
  * 
@@ -338,6 +364,19 @@ export interface LabelView {
      * @memberof LabelView
      */
     'biography'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MoodDTO
+ */
+export interface MoodDTO {
+    /**
+     * 
+     * @type {number}
+     * @memberof MoodDTO
+     */
+    'id'?: number;
 }
 /**
  * 
@@ -2440,10 +2479,11 @@ export const PrivatePlaylistControllerApiAxiosParamCreator = function (configura
         /**
          * 
          * @summary Returns all private playlists
+         * @param {string} [username] username to find specific playlist for label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPrivatePlaylists: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPrivatePlaylists: async (username?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/private-playlist`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2459,6 +2499,10 @@ export const PrivatePlaylistControllerApiAxiosParamCreator = function (configura
             // authentication BasicAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            if (username !== undefined) {
+                localVarQueryParameter['username'] = username;
+            }
 
 
     
@@ -2484,11 +2528,12 @@ export const PrivatePlaylistControllerApiFp = function(configuration?: Configura
         /**
          * 
          * @summary Returns all private playlists
+         * @param {string} [username] username to find specific playlist for label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPrivatePlaylists(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PrivatePlaylistView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPrivatePlaylists(options);
+        async getPrivatePlaylists(username?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PrivatePlaylistView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPrivatePlaylists(username, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2504,14 +2549,29 @@ export const PrivatePlaylistControllerApiFactory = function (configuration?: Con
         /**
          * 
          * @summary Returns all private playlists
+         * @param {string} [username] username to find specific playlist for label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPrivatePlaylists(options?: any): AxiosPromise<Array<PrivatePlaylistView>> {
-            return localVarFp.getPrivatePlaylists(options).then((request) => request(axios, basePath));
+        getPrivatePlaylists(username?: string, options?: any): AxiosPromise<Array<PrivatePlaylistView>> {
+            return localVarFp.getPrivatePlaylists(username, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for getPrivatePlaylists operation in PrivatePlaylistControllerApi.
+ * @export
+ * @interface PrivatePlaylistControllerApiGetPrivatePlaylistsRequest
+ */
+export interface PrivatePlaylistControllerApiGetPrivatePlaylistsRequest {
+    /**
+     * username to find specific playlist for label
+     * @type {string}
+     * @memberof PrivatePlaylistControllerApiGetPrivatePlaylists
+     */
+    readonly username?: string
+}
 
 /**
  * PrivatePlaylistControllerApi - object-oriented interface
@@ -2523,12 +2583,13 @@ export class PrivatePlaylistControllerApi extends BaseAPI {
     /**
      * 
      * @summary Returns all private playlists
+     * @param {PrivatePlaylistControllerApiGetPrivatePlaylistsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PrivatePlaylistControllerApi
      */
-    public getPrivatePlaylists(options?: AxiosRequestConfig) {
-        return PrivatePlaylistControllerApiFp(this.configuration).getPrivatePlaylists(options).then((request) => request(this.axios, this.basePath));
+    public getPrivatePlaylists(requestParameters: PrivatePlaylistControllerApiGetPrivatePlaylistsRequest = {}, options?: AxiosRequestConfig) {
+        return PrivatePlaylistControllerApiFp(this.configuration).getPrivatePlaylists(requestParameters.username, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2644,10 +2705,11 @@ export const PublicPlaylistControllerApiAxiosParamCreator = function (configurat
         /**
          * 
          * @summary Returns all public playlists
+         * @param {number} [labelId] label id to find specific playlist for label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPublicPlaylists: async (options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPublicPlaylists: async (labelId?: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/public-playlist`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2663,6 +2725,10 @@ export const PublicPlaylistControllerApiAxiosParamCreator = function (configurat
             // authentication BasicAuth required
             // http basic authentication required
             setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            if (labelId !== undefined) {
+                localVarQueryParameter['labelId'] = labelId;
+            }
 
 
     
@@ -2688,11 +2754,12 @@ export const PublicPlaylistControllerApiFp = function(configuration?: Configurat
         /**
          * 
          * @summary Returns all public playlists
+         * @param {number} [labelId] label id to find specific playlist for label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPublicPlaylists(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PublicPlaylistView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPublicPlaylists(options);
+        async getPublicPlaylists(labelId?: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<PublicPlaylistView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPublicPlaylists(labelId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2708,14 +2775,29 @@ export const PublicPlaylistControllerApiFactory = function (configuration?: Conf
         /**
          * 
          * @summary Returns all public playlists
+         * @param {number} [labelId] label id to find specific playlist for label
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPublicPlaylists(options?: any): AxiosPromise<Array<PublicPlaylistView>> {
-            return localVarFp.getPublicPlaylists(options).then((request) => request(axios, basePath));
+        getPublicPlaylists(labelId?: number, options?: any): AxiosPromise<Array<PublicPlaylistView>> {
+            return localVarFp.getPublicPlaylists(labelId, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for getPublicPlaylists operation in PublicPlaylistControllerApi.
+ * @export
+ * @interface PublicPlaylistControllerApiGetPublicPlaylistsRequest
+ */
+export interface PublicPlaylistControllerApiGetPublicPlaylistsRequest {
+    /**
+     * label id to find specific playlist for label
+     * @type {number}
+     * @memberof PublicPlaylistControllerApiGetPublicPlaylists
+     */
+    readonly labelId?: number
+}
 
 /**
  * PublicPlaylistControllerApi - object-oriented interface
@@ -2727,12 +2809,13 @@ export class PublicPlaylistControllerApi extends BaseAPI {
     /**
      * 
      * @summary Returns all public playlists
+     * @param {PublicPlaylistControllerApiGetPublicPlaylistsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof PublicPlaylistControllerApi
      */
-    public getPublicPlaylists(options?: AxiosRequestConfig) {
-        return PublicPlaylistControllerApiFp(this.configuration).getPublicPlaylists(options).then((request) => request(this.axios, this.basePath));
+    public getPublicPlaylists(requestParameters: PublicPlaylistControllerApiGetPublicPlaylistsRequest = {}, options?: AxiosRequestConfig) {
+        return PublicPlaylistControllerApiFp(this.configuration).getPublicPlaylists(requestParameters.labelId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -2781,10 +2864,14 @@ export const TitleControllerApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Returns titles matched against keyword
          * @param {string} [keyword] the term you want to search for
+         * @param {number} [tempo] the song tempo you search for
+         * @param {Array<number>} [mood] 
+         * @param {Array<number>} [genre] 
+         * @param {Array<number>} [instrument] the song tempo you search for
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchTitles: async (keyword?: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchTitles: async (keyword?: string, tempo?: number, mood?: Array<number>, genre?: Array<number>, instrument?: Array<number>, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/title/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -2803,6 +2890,22 @@ export const TitleControllerApiAxiosParamCreator = function (configuration?: Con
 
             if (keyword !== undefined) {
                 localVarQueryParameter['keyword'] = keyword;
+            }
+
+            if (tempo !== undefined) {
+                localVarQueryParameter['tempo'] = tempo;
+            }
+
+            if (mood) {
+                localVarQueryParameter['mood'] = mood;
+            }
+
+            if (genre) {
+                localVarQueryParameter['genre'] = genre;
+            }
+
+            if (instrument) {
+                localVarQueryParameter['instrument'] = instrument;
             }
 
 
@@ -2840,11 +2943,15 @@ export const TitleControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary Returns titles matched against keyword
          * @param {string} [keyword] the term you want to search for
+         * @param {number} [tempo] the song tempo you search for
+         * @param {Array<number>} [mood] 
+         * @param {Array<number>} [genre] 
+         * @param {Array<number>} [instrument] the song tempo you search for
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchTitles(keyword?: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TitleView>>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchTitles(keyword, options);
+        async searchTitles(keyword?: string, tempo?: number, mood?: Array<number>, genre?: Array<number>, instrument?: Array<number>, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TitleView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchTitles(keyword, tempo, mood, genre, instrument, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -2870,11 +2977,15 @@ export const TitleControllerApiFactory = function (configuration?: Configuration
          * 
          * @summary Returns titles matched against keyword
          * @param {string} [keyword] the term you want to search for
+         * @param {number} [tempo] the song tempo you search for
+         * @param {Array<number>} [mood] 
+         * @param {Array<number>} [genre] 
+         * @param {Array<number>} [instrument] the song tempo you search for
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchTitles(keyword?: string, options?: any): AxiosPromise<Array<TitleView>> {
-            return localVarFp.searchTitles(keyword, options).then((request) => request(axios, basePath));
+        searchTitles(keyword?: string, tempo?: number, mood?: Array<number>, genre?: Array<number>, instrument?: Array<number>, options?: any): AxiosPromise<Array<TitleView>> {
+            return localVarFp.searchTitles(keyword, tempo, mood, genre, instrument, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -2891,6 +3002,34 @@ export interface TitleControllerApiSearchTitlesRequest {
      * @memberof TitleControllerApiSearchTitles
      */
     readonly keyword?: string
+
+    /**
+     * the song tempo you search for
+     * @type {number}
+     * @memberof TitleControllerApiSearchTitles
+     */
+    readonly tempo?: number
+
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof TitleControllerApiSearchTitles
+     */
+    readonly mood?: Array<number>
+
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof TitleControllerApiSearchTitles
+     */
+    readonly genre?: Array<number>
+
+    /**
+     * the song tempo you search for
+     * @type {Array<number>}
+     * @memberof TitleControllerApiSearchTitles
+     */
+    readonly instrument?: Array<number>
 }
 
 /**
@@ -2920,7 +3059,7 @@ export class TitleControllerApi extends BaseAPI {
      * @memberof TitleControllerApi
      */
     public searchTitles(requestParameters: TitleControllerApiSearchTitlesRequest = {}, options?: AxiosRequestConfig) {
-        return TitleControllerApiFp(this.configuration).searchTitles(requestParameters.keyword, options).then((request) => request(this.axios, this.basePath));
+        return TitleControllerApiFp(this.configuration).searchTitles(requestParameters.keyword, requestParameters.tempo, requestParameters.mood, requestParameters.genre, requestParameters.instrument, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

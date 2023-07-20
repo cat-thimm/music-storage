@@ -3,7 +3,7 @@
     <mat-label>{{title}}</mat-label>
     <mat-select>
       <mat-option *ngFor="let option of dropdown" [value]="option">
-        {{option}}
+        {{option.name}}
       </mat-option>
     </mat-select>
   </mat-form-field>

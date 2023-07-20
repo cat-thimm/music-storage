@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import '../helpers/axios'
 
 @Component({
   selector: 'app-root',

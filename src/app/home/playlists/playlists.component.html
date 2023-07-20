@@ -12,5 +12,13 @@
       </mat-list-item>
     </mat-list>
     <p *ngIf="playlists.length === 0">Noch keine Playlists erstellt.</p>
+    <button mat-raised-button color="primary" (click)="toggleModal()">
+      Erstellen
+    </button>
   </mat-card-content>
 </mat-card>
+
+<app-add-playlist-modal
+  [(showModal)]="showModal"
+  [searchResults]="searchResults"
+></app-add-playlist-modal>

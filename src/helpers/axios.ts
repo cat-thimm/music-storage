@@ -5,10 +5,8 @@ const attachToken = (config: AxiosRequestConfig) => {
   config.headers = {
     ...config.headers,
     Authorization: token ? `Basic ${token}` : '',
-    // withCredentials : !!token
   };
 
-  console.log(config)
   return config;
 };
 

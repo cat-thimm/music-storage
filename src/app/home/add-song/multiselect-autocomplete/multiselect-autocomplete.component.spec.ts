@@ -8,7 +8,7 @@ describe('MultiselectAutocompleteComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [MultiselectAutocompleteComponent]
+      declarations: [MultiselectAutocompleteComponent],
     });
     fixture = TestBed.createComponent(MultiselectAutocompleteComponent);
     component = fixture.componentInstance;
