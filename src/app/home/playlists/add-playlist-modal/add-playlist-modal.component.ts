@@ -16,6 +16,7 @@ export class AddPlaylistModalComponent implements OnInit {
   resultsWithCheck: any;
   playlistName = '';
   description = '';
+  cover: any | null = null;
 
   constructor(
     private playlistService: PlaylistService,
@@ -37,21 +38,35 @@ export class AddPlaylistModalComponent implements OnInit {
     this.showModalChange.emit(false);
   }
 
+  setFileData(files: FileList | null) {
+    if (files) {
+      this.cover = files[0];
+    }
+  }
+
   async createPlaylist() {
-    console.log('>>> test');
     const titles = this.resultsWithCheck
       .filter((result: any) => result.checked)
       .map((filteredResult: any) => filteredResult.id);
 
-    const playlist: PrivatePlaylistCreateDTO = {
-      playlist: {
-        name: this.playlistName,
-        text: this.description,
-        user: this.authenticationService.user,
-      },
-      titles: titles,
-    };
+    const reader = new FileReader();
 
-    await this.playlistService.createPrivatePlaylist(playlist);
+    reader.readAsDataURL(this.cover);
+
+    reader.onload = async () => {
+      const playlist: PrivatePlaylistCreateDTO = {
+        playlist: {
+          name: this.playlistName,
+          text: this.description,
+          // @ts-ignore
+          previewPicture: reader.result.split(',')[1],
+          user: this.authenticationService.user,
+        },
+        titles: titles,
+      };
+
+      await this.playlistService.createPrivatePlaylist(playlist);
+      this.closeModal();
+    };
   }
 }

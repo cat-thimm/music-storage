@@ -1,15 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { MusicService } from '../common/services/music.service';
+
+import { ArtistView, InstrumentView, MoodView, TitleView } from 'src/api';
+
 import { AuthenticationService } from '../common/services/authentication.service';
-import { TabsService } from '../common/services/tabs.service';
-import {
-  ArtistView,
-  InstrumentView,
-  MoodView,
-  PrivatePlaylistView,
-  TitleView,
-} from 'src/api';
 import { PlaylistService } from '../common/services/playlist.service';
+import { MusicService } from '../common/services/music.service';
+import { TabsService } from '../common/services/tabs.service';
 
 @Component({
   selector: 'app-home',
@@ -52,8 +48,6 @@ export class HomeComponent implements OnInit {
   }
 
   async fetchPrivatePlaylists() {
-    
-    
     if (this.authenticationService.user?.username)
       this.privatePlaylist$ = await this.playlistService.getPrivatePlaylists(
         this.authenticationService.user?.username
