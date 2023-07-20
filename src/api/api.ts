@@ -469,6 +469,25 @@ export interface PresskitView {
 /**
  * 
  * @export
+ * @interface PrivatePlaylistCreateDTO
+ */
+export interface PrivatePlaylistCreateDTO {
+    /**
+     * 
+     * @type {PrivatePlaylistView}
+     * @memberof PrivatePlaylistCreateDTO
+     */
+    'playlist'?: PrivatePlaylistView;
+    /**
+     * 
+     * @type {Array<number>}
+     * @memberof PrivatePlaylistCreateDTO
+     */
+    'titles'?: Array<number>;
+}
+/**
+ * 
+ * @export
  * @interface PrivatePlaylistTitleLinkView
  */
 export interface PrivatePlaylistTitleLinkView {
@@ -2478,6 +2497,44 @@ export const PrivatePlaylistControllerApiAxiosParamCreator = function (configura
     return {
         /**
          * 
+         * @summary Creates private playlist
+         * @param {PrivatePlaylistCreateDTO} [privatePlaylistCreateDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPrivatePlaylist: async (privatePlaylistCreateDTO?: PrivatePlaylistCreateDTO, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/private-playlist`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(privatePlaylistCreateDTO, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns all private playlists
          * @param {string} [username] username to find specific playlist for label
          * @param {*} [options] Override http request option.
@@ -2527,6 +2584,17 @@ export const PrivatePlaylistControllerApiFp = function(configuration?: Configura
     return {
         /**
          * 
+         * @summary Creates private playlist
+         * @param {PrivatePlaylistCreateDTO} [privatePlaylistCreateDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createPrivatePlaylist(privatePlaylistCreateDTO?: PrivatePlaylistCreateDTO, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createPrivatePlaylist(privatePlaylistCreateDTO, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Returns all private playlists
          * @param {string} [username] username to find specific playlist for label
          * @param {*} [options] Override http request option.
@@ -2548,6 +2616,16 @@ export const PrivatePlaylistControllerApiFactory = function (configuration?: Con
     return {
         /**
          * 
+         * @summary Creates private playlist
+         * @param {PrivatePlaylistCreateDTO} [privatePlaylistCreateDTO] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createPrivatePlaylist(privatePlaylistCreateDTO?: PrivatePlaylistCreateDTO, options?: any): AxiosPromise<void> {
+            return localVarFp.createPrivatePlaylist(privatePlaylistCreateDTO, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Returns all private playlists
          * @param {string} [username] username to find specific playlist for label
          * @param {*} [options] Override http request option.
@@ -2558,6 +2636,20 @@ export const PrivatePlaylistControllerApiFactory = function (configuration?: Con
         },
     };
 };
+
+/**
+ * Request parameters for createPrivatePlaylist operation in PrivatePlaylistControllerApi.
+ * @export
+ * @interface PrivatePlaylistControllerApiCreatePrivatePlaylistRequest
+ */
+export interface PrivatePlaylistControllerApiCreatePrivatePlaylistRequest {
+    /**
+     * 
+     * @type {PrivatePlaylistCreateDTO}
+     * @memberof PrivatePlaylistControllerApiCreatePrivatePlaylist
+     */
+    readonly privatePlaylistCreateDTO?: PrivatePlaylistCreateDTO
+}
 
 /**
  * Request parameters for getPrivatePlaylists operation in PrivatePlaylistControllerApi.
@@ -2580,6 +2672,18 @@ export interface PrivatePlaylistControllerApiGetPrivatePlaylistsRequest {
  * @extends {BaseAPI}
  */
 export class PrivatePlaylistControllerApi extends BaseAPI {
+    /**
+     * 
+     * @summary Creates private playlist
+     * @param {PrivatePlaylistControllerApiCreatePrivatePlaylistRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof PrivatePlaylistControllerApi
+     */
+    public createPrivatePlaylist(requestParameters: PrivatePlaylistControllerApiCreatePrivatePlaylistRequest = {}, options?: AxiosRequestConfig) {
+        return PrivatePlaylistControllerApiFp(this.configuration).createPrivatePlaylist(requestParameters.privatePlaylistCreateDTO, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary Returns all private playlists

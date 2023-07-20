@@ -6,7 +6,7 @@ servers:
   - url: http://localhost:8080
     description: server runs on port 8080
 security:
-  - BasicAuth: [ ]
+  - BasicAuth: []
 paths:
   /login:
     post:
@@ -16,16 +16,16 @@ paths:
         - user-controller
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
-              $ref: '#/components/schemas/AuthenticationView'
+              $ref: "#/components/schemas/AuthenticationView"
       responses:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/UserView'
+                $ref: "#/components/schemas/UserView"
   /mood:
     get:
       summary: Returns all moods
@@ -36,11 +36,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/MoodView'
+                  $ref: "#/components/schemas/MoodView"
   /owner:
     get:
       summary: Returns all owners of song titles
@@ -51,11 +51,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/OwnerView'
+                  $ref: "#/components/schemas/OwnerView"
   /label:
     get:
       summary: Returns all labels
@@ -66,11 +66,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/LabelView'
+                  $ref: "#/components/schemas/LabelView"
     post:
       summary: Creates a new label
       operationId: createLabel
@@ -78,12 +78,12 @@ paths:
         - label-controller
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
-              $ref: '#/components/schemas/LabelView'
+              $ref: "#/components/schemas/LabelView"
       responses:
         201:
-          description: 'Label created.'
+          description: "Label created."
   /audio:
     get:
       summary: Returns all audio files
@@ -94,11 +94,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AudioView'
+                  $ref: "#/components/schemas/AudioView"
     post:
       summary: Uploads a wav file to the db
       tags:
@@ -124,7 +124,7 @@ paths:
           content:
             "application/json":
               schema:
-                $ref: '#/components/schemas/AudioView'
+                $ref: "#/components/schemas/AudioView"
   /audio-file/{audioId}:
     get:
       summary: Returns specific audio file
@@ -142,7 +142,7 @@ paths:
         200:
           description: OK
           content:
-            'audio/wav':
+            "audio/wav":
               schema:
                 type: string
                 format: byte
@@ -156,11 +156,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AudioView'
+                  $ref: "#/components/schemas/AudioView"
   /public-playlist:
     get:
       summary: Returns all public playlists
@@ -178,11 +178,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PublicPlaylistView'
+                  $ref: "#/components/schemas/PublicPlaylistView"
   /instrument:
     get:
       summary: Returns all instruments
@@ -193,11 +193,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/InstrumentView'
+                  $ref: "#/components/schemas/InstrumentView"
   /owner-title-link:
     get:
       summary: Returns the owner of a title
@@ -208,9 +208,9 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/OwnerTitleLinkView'
+                $ref: "#/components/schemas/OwnerTitleLinkView"
   /title:
     get:
       summary: Returns all titles
@@ -221,11 +221,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TitleView'
+                  $ref: "#/components/schemas/TitleView"
   /title/search:
     get:
       summary: Returns titles matched against keyword
@@ -272,11 +272,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/TitleView'
+                  $ref: "#/components/schemas/TitleView"
   /artist-title-link:
     get:
       summary: Returns the composer of tile
@@ -287,9 +287,9 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/ArtistTitleLinkView'
+                $ref: "#/components/schemas/ArtistTitleLinkView"
   /artist:
     get:
       summary: Returns all Artists
@@ -300,11 +300,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/ArtistView'
+                  $ref: "#/components/schemas/ArtistView"
   /genre-title-link:
     get:
       summary: Returns the genres of a specific title
@@ -315,9 +315,9 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/GenreTitleLinkView'
+                $ref: "#/components/schemas/GenreTitleLinkView"
   /genre:
     get:
       summary: Returns the genres of a specific title
@@ -328,11 +328,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/GenreTitleLinkView'
+                  $ref: "#/components/schemas/GenreTitleLinkView"
   /album-title-link:
     get:
       summary: Returns the titles of a specific album
@@ -343,9 +343,9 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/AlbumTitleLinkView'
+                $ref: "#/components/schemas/AlbumTitleLinkView"
   /album:
     get:
       summary: Returns all albums
@@ -356,11 +356,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/AlbumView'
+                  $ref: "#/components/schemas/AlbumView"
   /presskit:
     get:
       summary: Returns all presskits
@@ -371,11 +371,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PresskitView'
+                  $ref: "#/components/schemas/PresskitView"
   /private-playlist-title-link:
     get:
       summary: Returns titles of a specific public playlist
@@ -386,9 +386,9 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/PrivatePlaylistTitleLinkView'
+                $ref: "#/components/schemas/PrivatePlaylistTitleLinkView"
   /private-playlist:
     get:
       summary: Returns all private playlists
@@ -406,11 +406,24 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/PrivatePlaylistView'
+                  $ref: "#/components/schemas/PrivatePlaylistView"
+    post:
+      summary: Creates private playlist
+      operationId: createPrivatePlaylist
+      tags:
+        - private-playlist-controller
+      requestBody:
+        content:
+          "application/json":
+            schema:
+              $ref: "#/components/schemas/PrivatePlaylistCreateDTO"
+      responses:
+        201:
+          description: "Private Playlist created."
   /user:
     get:
       summary: Returns all users
@@ -421,11 +434,11 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/UserView'
+                  $ref: "#/components/schemas/UserView"
     post:
       summary: Creates user
       operationId: createUser
@@ -433,12 +446,12 @@ paths:
         - user-controller
       requestBody:
         content:
-          'application/json':
+          "application/json":
             schema:
-              $ref: '#/components/schemas/UserView'
+              $ref: "#/components/schemas/UserView"
       responses:
         201:
-          description: 'User created.'
+          description: "User created."
   /download:
     get:
       summary: Returns all downloads
@@ -449,11 +462,9 @@ paths:
         200:
           description: OK
           content:
-            'application/json':
+            "application/json":
               schema:
-                $ref: '#/components/schemas/DownloadView'
-
-
+                $ref: "#/components/schemas/DownloadView"
 
 components:
   securitySchemes:
@@ -474,7 +485,7 @@ components:
         id:
           type: integer
         label:
-          $ref: '#/components/schemas/LabelView'
+          $ref: "#/components/schemas/LabelView"
         mp3:
           type: string
           format: byte
@@ -487,7 +498,7 @@ components:
       type: object
       properties:
         label:
-          $ref: '#/components/schemas/LabelView'
+          $ref: "#/components/schemas/LabelView"
         wav:
           type: string
           format: byte
@@ -570,7 +581,7 @@ components:
         id:
           type: integer
         label:
-         $ref: '#/components/schemas/LabelView'
+          $ref: "#/components/schemas/LabelView"
         name:
           type: string
         gemaNr:
@@ -605,8 +616,7 @@ components:
           type: string
           format: byte
         biography:
-          type:
-            string
+          type: string
     GenreTitleLinkView:
       type: object
       properties:
@@ -675,7 +685,7 @@ components:
         id:
           type: integer
         user:
-          $ref: '#/components/schemas/UserView'
+          $ref: "#/components/schemas/UserView"
         name:
           type: string
         text:
@@ -696,7 +706,7 @@ components:
           format: password
         role:
           type: string
-          enum: [ 'LABEL', 'USER' ]
+          enum: ["LABEL", "USER"]
     DownloadView:
       type: object
       properties:
@@ -706,8 +716,12 @@ components:
           type: integer
         audioId:
           type: integer
-
-
-
-
-
+    PrivatePlaylistCreateDTO:
+      type: object
+      properties:
+        playlist:
+          $ref: "#/components/schemas/PrivatePlaylistView"
+        titles:
+          type: array
+          items:
+            type: integer

@@ -4,6 +4,7 @@ import {
   LabelView,
   UserControllerApi,
   UserView,
+  UserViewRoleEnum,
 } from '../../../api';
 
 @Injectable({
@@ -13,16 +14,17 @@ export class AuthenticationService {
   userController: UserControllerApi = new UserControllerApi();
   labelController: LabelControllerApi = new LabelControllerApi();
   user?: UserView = undefined;
+  userRole?: UserViewRoleEnum = undefined;
 
   async login(username: string, password: string) {
     try {
-
       const response = await this.userController.login({
         authenticationView: { username, password },
       });
 
       if (response.data) {
         this.user = response.data;
+        this.userRole = response.data.role;
         localStorage.setItem('token', btoa(`${username}:${password}`));
       }
     } catch (e) {

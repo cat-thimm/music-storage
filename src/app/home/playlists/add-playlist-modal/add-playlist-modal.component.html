@@ -4,31 +4,46 @@
       <mat-card-title> Playlist erstellen </mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <div>
-        <form #form="ngForm">
-          <mat-form-field>
-            <input
-              type="text"
-              matInput
-              [(ngModel)]="playlistName"
-              placeholder="Wie möchtest du diese Playlist nennen?"
-              name="playlistname"
-              required
-            />
-          </mat-form-field>
-        </form>
+      <form #form="ngForm" (submit)="createPlaylist()">
+        <mat-form-field>
+          <mat-label> Playlist Name </mat-label>
+          <input
+            type="text"
+            matInput
+            [(ngModel)]="playlistName"
+            placeholder="Wie möchtest du diese Playlist nennen?"
+            name="playlistName"
+            required
+          />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label> Beschreibung </mat-label>
+          <textarea
+            type="description"
+            matInput
+            [(ngModel)]="description"
+            placeholder="Kurze Beschreibung deiner Playlist"
+            name="description"
+            required
+          ></textarea>
+        </mat-form-field>
+
         <mat-checkbox
+          [ngModelOptions]="{ standalone: true }"
           *ngFor="let result of resultsWithCheck"
           [(ngModel)]="result.checked"
           color="primary"
         >
           {{ result.name }}
         </mat-checkbox>
-      </div>
-      <div class="button-wrapper">
-        <button mat-button>Abbrechen</button>
-        <button mat-raised-button color="primary">Erstellen</button>
-      </div>
+
+        <div class="button-wrapper">
+          <button mat-button (click)="closeModal()">Abbrechen</button>
+          <button mat-raised-button color="primary" type="submit">
+            Erstellen
+          </button>
+        </div>
+      </form>
     </mat-card-content>
   </mat-card>
 </div>
