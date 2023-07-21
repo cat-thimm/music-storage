@@ -4,6 +4,12 @@
   max-width: 25%;
 }
 
+.row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .title-wrapper {
   display: flex;
   flex-direction: row;

@@ -1,15 +1,13 @@
 <mat-card color="black">
   <mat-card-content class="image-wrapper">
-    <img src="assets/channels4_profile.jpg" />
+    <img [src]="cover" />
   </mat-card-content>
   <mat-card-header>
     <mat-card-title>{{ title?.name }}</mat-card-title>
     <button mat-icon-button color="accent" (click)="playAudio(title?.id || 1)">
       <mat-icon *ngIf="!audioStarted">play_arrow</mat-icon>
       <mat-icon *ngIf="audioStarted">stop</mat-icon>
-
     </button>
-    
   </mat-card-header>
   <mat-card-content>
     {{ title?.label?.name }}
@@ -19,7 +17,7 @@
     <button
       mat-button
       color="accent"
-      (click)="downloadSong(title?.id!.toString(), title?.name)"
+      (click)="downloadSong(title?.id, title?.name)"
     >
       <mat-icon> download </mat-icon>
       Herunterladen

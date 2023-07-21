@@ -1,16 +1,22 @@
 <mat-card-content class="col">
-  <mat-form-field class="search-wrapper">
-    <input
-      type="search"
-      matInput
-      placeholder="Suchbegriff"
-      name="email"
-      required
-      [(ngModel)]="searchString"
-      (keyup.enter)="search()"
-    />
-    <mat-icon matPrefix>search</mat-icon>
-  </mat-form-field>
+  <div class="row">
+    <mat-form-field class="search-wrapper">
+      <input
+        type="search"
+        matInput
+        placeholder="Suchbegriff"
+        name="email"
+        required
+        [(ngModel)]="searchString"
+        (keyup.enter)="search()"
+      />
+      <mat-icon matPrefix>search</mat-icon>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="toggleModal()">
+      Neues Album
+    </button>
+  </div>
+
   <h2>Suche filtern</h2>
   <div class="row">
     <div class="select-wrapper">
@@ -94,3 +100,8 @@
   >
   </mat-paginator>
 </mat-card-content>
+
+<app-add-album
+  [(showModal)]="showAlbumModal"
+  [searchResults]="searchResults"
+></app-add-album>

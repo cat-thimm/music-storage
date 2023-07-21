@@ -82,6 +82,18 @@ export interface AlbumView {
      * @memberof AlbumView
      */
     'releaseDate'?: string;
+    /**
+     * 
+     * @type {LabelView}
+     * @memberof AlbumView
+     */
+    'label'?: LabelView;
+    /**
+     * 
+     * @type {PresskitView}
+     * @memberof AlbumView
+     */
+    'presskitId'?: PresskitView;
 }
 /**
  * 
@@ -201,12 +213,6 @@ export interface AudioView {
      * @memberof AudioView
      */
     'label'?: LabelView;
-    /**
-     * 
-     * @type {string}
-     * @memberof AudioView
-     */
-    'mp3'?: string;
     /**
      * 
      * @type {string}
@@ -818,6 +824,174 @@ export const AlbumControllerApiAxiosParamCreator = function (configuration?: Con
     return {
         /**
          * 
+         * @summary Adds Title to Album
+         * @param {number} titleId 
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTitleToAlbum: async (titleId: number, albumId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'titleId' is not null or undefined
+            assertParamExists('addTitleToAlbum', 'titleId', titleId)
+            // verify required parameter 'albumId' is not null or undefined
+            assertParamExists('addTitleToAlbum', 'albumId', albumId)
+            const localVarPath = `/albumTitles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            if (titleId !== undefined) {
+                localVarQueryParameter['titleId'] = titleId;
+            }
+
+            if (albumId !== undefined) {
+                localVarQueryParameter['albumId'] = albumId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Adds Title to Album
+         * @param {number} albumTitleLinkId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTitleFromAlbum: async (albumTitleLinkId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'albumTitleLinkId' is not null or undefined
+            assertParamExists('deleteTitleFromAlbum', 'albumTitleLinkId', albumTitleLinkId)
+            const localVarPath = `/albumTitles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            if (albumTitleLinkId !== undefined) {
+                localVarQueryParameter['albumTitleLinkId'] = albumTitleLinkId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Returns specific album
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlbum: async (albumId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'albumId' is not null or undefined
+            assertParamExists('getAlbum', 'albumId', albumId)
+            const localVarPath = `/album/{albumId}`
+                .replace(`{${"albumId"}}`, encodeURIComponent(String(albumId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary Returns Titles that are part of the requested album
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlbumTitles: async (albumId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'albumId' is not null or undefined
+            assertParamExists('getAlbumTitles', 'albumId', albumId)
+            const localVarPath = `/albumTitles`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+            if (albumId !== undefined) {
+                localVarQueryParameter['albumId'] = albumId;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary Returns all albums
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -850,6 +1024,86 @@ export const AlbumControllerApiAxiosParamCreator = function (configuration?: Con
                 options: localVarRequestOptions,
             };
         },
+        /**
+         * 
+         * @summary Uploads an album to the db
+         * @param {string} name 
+         * @param {string} year 
+         * @param {any} file 
+         * @param {string} text 
+         * @param {number} labelId 
+         * @param {number} presskitId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAlbum: async (name: string, year: string, file: any, text: string, labelId: number, presskitId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'name' is not null or undefined
+            assertParamExists('postAlbum', 'name', name)
+            // verify required parameter 'year' is not null or undefined
+            assertParamExists('postAlbum', 'year', year)
+            // verify required parameter 'file' is not null or undefined
+            assertParamExists('postAlbum', 'file', file)
+            // verify required parameter 'text' is not null or undefined
+            assertParamExists('postAlbum', 'text', text)
+            // verify required parameter 'labelId' is not null or undefined
+            assertParamExists('postAlbum', 'labelId', labelId)
+            // verify required parameter 'presskitId' is not null or undefined
+            assertParamExists('postAlbum', 'presskitId', presskitId)
+            const localVarPath = `/album`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
+
+            // authentication BasicAuth required
+            // http basic authentication required
+            setBasicAuthToObject(localVarRequestOptions, configuration)
+
+
+            if (name !== undefined) { 
+                localVarFormParams.append('name', name as any);
+            }
+    
+            if (year !== undefined) { 
+                localVarFormParams.append('year', year as any);
+            }
+    
+            if (file !== undefined) { 
+                localVarFormParams.append('file', file as any);
+            }
+    
+            if (text !== undefined) { 
+                localVarFormParams.append('text', text as any);
+            }
+    
+            if (labelId !== undefined) { 
+                localVarFormParams.append('labelId', labelId as any);
+            }
+    
+            if (presskitId !== undefined) { 
+                localVarFormParams.append('presskitId', presskitId as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = localVarFormParams;
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
     }
 };
 
@@ -862,12 +1116,73 @@ export const AlbumControllerApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary Adds Title to Album
+         * @param {number} titleId 
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async addTitleToAlbum(titleId: number, albumId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.addTitleToAlbum(titleId, albumId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Adds Title to Album
+         * @param {number} albumTitleLinkId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteTitleFromAlbum(albumTitleLinkId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteTitleFromAlbum(albumTitleLinkId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Returns specific album
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAlbum(albumId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlbumView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAlbum(albumId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Returns Titles that are part of the requested album
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAlbumTitles(albumId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<TitleView>>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAlbumTitles(albumId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary Returns all albums
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
         async getAlbums(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<AlbumView>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAlbums(options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary Uploads an album to the db
+         * @param {string} name 
+         * @param {string} year 
+         * @param {any} file 
+         * @param {string} text 
+         * @param {number} labelId 
+         * @param {number} presskitId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postAlbum(name: string, year: string, file: any, text: string, labelId: number, presskitId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AlbumView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAlbum(name, year, file, text, labelId, presskitId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -882,6 +1197,47 @@ export const AlbumControllerApiFactory = function (configuration?: Configuration
     return {
         /**
          * 
+         * @summary Adds Title to Album
+         * @param {number} titleId 
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        addTitleToAlbum(titleId: number, albumId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.addTitleToAlbum(titleId, albumId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Adds Title to Album
+         * @param {number} albumTitleLinkId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteTitleFromAlbum(albumTitleLinkId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteTitleFromAlbum(albumTitleLinkId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Returns specific album
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlbum(albumId: number, options?: any): AxiosPromise<AlbumView> {
+            return localVarFp.getAlbum(albumId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary Returns Titles that are part of the requested album
+         * @param {number} albumId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAlbumTitles(albumId: number, options?: any): AxiosPromise<Array<TitleView>> {
+            return localVarFp.getAlbumTitles(albumId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary Returns all albums
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -889,8 +1245,135 @@ export const AlbumControllerApiFactory = function (configuration?: Configuration
         getAlbums(options?: any): AxiosPromise<Array<AlbumView>> {
             return localVarFp.getAlbums(options).then((request) => request(axios, basePath));
         },
+        /**
+         * 
+         * @summary Uploads an album to the db
+         * @param {string} name 
+         * @param {string} year 
+         * @param {any} file 
+         * @param {string} text 
+         * @param {number} labelId 
+         * @param {number} presskitId 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postAlbum(name: string, year: string, file: any, text: string, labelId: number, presskitId: number, options?: any): AxiosPromise<AlbumView> {
+            return localVarFp.postAlbum(name, year, file, text, labelId, presskitId, options).then((request) => request(axios, basePath));
+        },
     };
 };
+
+/**
+ * Request parameters for addTitleToAlbum operation in AlbumControllerApi.
+ * @export
+ * @interface AlbumControllerApiAddTitleToAlbumRequest
+ */
+export interface AlbumControllerApiAddTitleToAlbumRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AlbumControllerApiAddTitleToAlbum
+     */
+    readonly titleId: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AlbumControllerApiAddTitleToAlbum
+     */
+    readonly albumId: number
+}
+
+/**
+ * Request parameters for deleteTitleFromAlbum operation in AlbumControllerApi.
+ * @export
+ * @interface AlbumControllerApiDeleteTitleFromAlbumRequest
+ */
+export interface AlbumControllerApiDeleteTitleFromAlbumRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AlbumControllerApiDeleteTitleFromAlbum
+     */
+    readonly albumTitleLinkId: number
+}
+
+/**
+ * Request parameters for getAlbum operation in AlbumControllerApi.
+ * @export
+ * @interface AlbumControllerApiGetAlbumRequest
+ */
+export interface AlbumControllerApiGetAlbumRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AlbumControllerApiGetAlbum
+     */
+    readonly albumId: number
+}
+
+/**
+ * Request parameters for getAlbumTitles operation in AlbumControllerApi.
+ * @export
+ * @interface AlbumControllerApiGetAlbumTitlesRequest
+ */
+export interface AlbumControllerApiGetAlbumTitlesRequest {
+    /**
+     * 
+     * @type {number}
+     * @memberof AlbumControllerApiGetAlbumTitles
+     */
+    readonly albumId: number
+}
+
+/**
+ * Request parameters for postAlbum operation in AlbumControllerApi.
+ * @export
+ * @interface AlbumControllerApiPostAlbumRequest
+ */
+export interface AlbumControllerApiPostAlbumRequest {
+    /**
+     * 
+     * @type {string}
+     * @memberof AlbumControllerApiPostAlbum
+     */
+    readonly name: string
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AlbumControllerApiPostAlbum
+     */
+    readonly year: string
+
+    /**
+     * 
+     * @type {any}
+     * @memberof AlbumControllerApiPostAlbum
+     */
+    readonly file: any
+
+    /**
+     * 
+     * @type {string}
+     * @memberof AlbumControllerApiPostAlbum
+     */
+    readonly text: string
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AlbumControllerApiPostAlbum
+     */
+    readonly labelId: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AlbumControllerApiPostAlbum
+     */
+    readonly presskitId: number
+}
 
 /**
  * AlbumControllerApi - object-oriented interface
@@ -901,6 +1384,54 @@ export const AlbumControllerApiFactory = function (configuration?: Configuration
 export class AlbumControllerApi extends BaseAPI {
     /**
      * 
+     * @summary Adds Title to Album
+     * @param {AlbumControllerApiAddTitleToAlbumRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlbumControllerApi
+     */
+    public addTitleToAlbum(requestParameters: AlbumControllerApiAddTitleToAlbumRequest, options?: AxiosRequestConfig) {
+        return AlbumControllerApiFp(this.configuration).addTitleToAlbum(requestParameters.titleId, requestParameters.albumId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Adds Title to Album
+     * @param {AlbumControllerApiDeleteTitleFromAlbumRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlbumControllerApi
+     */
+    public deleteTitleFromAlbum(requestParameters: AlbumControllerApiDeleteTitleFromAlbumRequest, options?: AxiosRequestConfig) {
+        return AlbumControllerApiFp(this.configuration).deleteTitleFromAlbum(requestParameters.albumTitleLinkId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Returns specific album
+     * @param {AlbumControllerApiGetAlbumRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlbumControllerApi
+     */
+    public getAlbum(requestParameters: AlbumControllerApiGetAlbumRequest, options?: AxiosRequestConfig) {
+        return AlbumControllerApiFp(this.configuration).getAlbum(requestParameters.albumId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Returns Titles that are part of the requested album
+     * @param {AlbumControllerApiGetAlbumTitlesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlbumControllerApi
+     */
+    public getAlbumTitles(requestParameters: AlbumControllerApiGetAlbumTitlesRequest, options?: AxiosRequestConfig) {
+        return AlbumControllerApiFp(this.configuration).getAlbumTitles(requestParameters.albumId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary Returns all albums
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -908,6 +1439,18 @@ export class AlbumControllerApi extends BaseAPI {
      */
     public getAlbums(options?: AxiosRequestConfig) {
         return AlbumControllerApiFp(this.configuration).getAlbums(options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary Uploads an album to the db
+     * @param {AlbumControllerApiPostAlbumRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof AlbumControllerApi
+     */
+    public postAlbum(requestParameters: AlbumControllerApiPostAlbumRequest, options?: AxiosRequestConfig) {
+        return AlbumControllerApiFp(this.configuration).postAlbum(requestParameters.name, requestParameters.year, requestParameters.file, requestParameters.text, requestParameters.labelId, requestParameters.presskitId, options).then((request) => request(this.axios, this.basePath));
     }
 }
 
@@ -1227,11 +1770,11 @@ export const AudioControllerApiAxiosParamCreator = function (configuration?: Con
         /**
          * 
          * @summary Returns specific audio file
-         * @param {string} audioId The ID of the audio file to retrieve
+         * @param {number} audioId The ID of the audio file to retrieve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAudioFile: async (audioId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAudioFile: async (audioId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'audioId' is not null or undefined
             assertParamExists('getAudioFile', 'audioId', audioId)
             const localVarPath = `/audio-file/{audioId}`
@@ -1300,13 +1843,16 @@ export const AudioControllerApiAxiosParamCreator = function (configuration?: Con
          * 
          * @summary Uploads a wav file to the db
          * @param {number} labelId 
+         * @param {number} titleId 
          * @param {any} wav 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAudio: async (labelId: number, wav: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postAudio: async (labelId: number, titleId: number, wav: any, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'labelId' is not null or undefined
             assertParamExists('postAudio', 'labelId', labelId)
+            // verify required parameter 'titleId' is not null or undefined
+            assertParamExists('postAudio', 'titleId', titleId)
             // verify required parameter 'wav' is not null or undefined
             assertParamExists('postAudio', 'wav', wav)
             const localVarPath = `/audio`;
@@ -1329,6 +1875,10 @@ export const AudioControllerApiAxiosParamCreator = function (configuration?: Con
 
             if (labelId !== undefined) { 
                 localVarFormParams.append('labelId', labelId as any);
+            }
+    
+            if (titleId !== undefined) { 
+                localVarFormParams.append('titleId', titleId as any);
             }
     
             if (wav !== undefined) { 
@@ -1361,11 +1911,11 @@ export const AudioControllerApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary Returns specific audio file
-         * @param {string} audioId The ID of the audio file to retrieve
+         * @param {number} audioId The ID of the audio file to retrieve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getAudioFile(audioId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
+        async getAudioFile(audioId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<string>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getAudioFile(audioId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1383,12 +1933,13 @@ export const AudioControllerApiFp = function(configuration?: Configuration) {
          * 
          * @summary Uploads a wav file to the db
          * @param {number} labelId 
+         * @param {number} titleId 
          * @param {any} wav 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postAudio(labelId: number, wav: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudioView>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudio(labelId, wav, options);
+        async postAudio(labelId: number, titleId: number, wav: any, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AudioView>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postAudio(labelId, titleId, wav, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1404,11 +1955,11 @@ export const AudioControllerApiFactory = function (configuration?: Configuration
         /**
          * 
          * @summary Returns specific audio file
-         * @param {string} audioId The ID of the audio file to retrieve
+         * @param {number} audioId The ID of the audio file to retrieve
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getAudioFile(audioId: string, options?: any): AxiosPromise<string> {
+        getAudioFile(audioId: number, options?: any): AxiosPromise<string> {
             return localVarFp.getAudioFile(audioId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1424,12 +1975,13 @@ export const AudioControllerApiFactory = function (configuration?: Configuration
          * 
          * @summary Uploads a wav file to the db
          * @param {number} labelId 
+         * @param {number} titleId 
          * @param {any} wav 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postAudio(labelId: number, wav: any, options?: any): AxiosPromise<AudioView> {
-            return localVarFp.postAudio(labelId, wav, options).then((request) => request(axios, basePath));
+        postAudio(labelId: number, titleId: number, wav: any, options?: any): AxiosPromise<AudioView> {
+            return localVarFp.postAudio(labelId, titleId, wav, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1442,10 +1994,10 @@ export const AudioControllerApiFactory = function (configuration?: Configuration
 export interface AudioControllerApiGetAudioFileRequest {
     /**
      * The ID of the audio file to retrieve
-     * @type {string}
+     * @type {number}
      * @memberof AudioControllerApiGetAudioFile
      */
-    readonly audioId: string
+    readonly audioId: number
 }
 
 /**
@@ -1460,6 +2012,13 @@ export interface AudioControllerApiPostAudioRequest {
      * @memberof AudioControllerApiPostAudio
      */
     readonly labelId: number
+
+    /**
+     * 
+     * @type {number}
+     * @memberof AudioControllerApiPostAudio
+     */
+    readonly titleId: number
 
     /**
      * 
@@ -1508,7 +2067,7 @@ export class AudioControllerApi extends BaseAPI {
      * @memberof AudioControllerApi
      */
     public postAudio(requestParameters: AudioControllerApiPostAudioRequest, options?: AxiosRequestConfig) {
-        return AudioControllerApiFp(this.configuration).postAudio(requestParameters.labelId, requestParameters.wav, options).then((request) => request(this.axios, this.basePath));
+        return AudioControllerApiFp(this.configuration).postAudio(requestParameters.labelId, requestParameters.titleId, requestParameters.wav, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

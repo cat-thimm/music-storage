@@ -67,7 +67,6 @@ export class AddPlaylistModalComponent implements OnInit {
     reader.onload = async () => {
       if (this.authenticationService.userRole === UserViewRoleEnum.LABEL) {
         const labelController = new LabelControllerApi();
-        console.log(this.authenticationService.labelId);
 
         const labels = await labelController.getLabel({
           labelId: this.authenticationService.labelId || 0,

@@ -33,6 +33,11 @@ export class OverviewComponent {
   currentPageIndex = 0;
   pageSize = 10;
   searchString = '';
+  showAlbumModal = false;
+
+  toggleModal() {
+    this.showAlbumModal = !this.showAlbumModal;
+  }
 
   currentResults = () =>
     this.searchResults?.slice(
@@ -47,7 +52,12 @@ export class OverviewComponent {
 
   search() {
     this.onSearch.emit({
-      keyword: this.searchString + ' ' + this.dropdownArtist,
+      keyword:
+        this.searchString && this.selectedArtist
+          ? this.searchString + ' ' + this.selectedArtist
+          : this.searchString && !this.selectedArtist
+          ? this.searchString
+          : this.selectedArtist,
       mood: this.selectedMood,
       genre: this.selectedGenre,
       instrument: this.selectedInstrument,

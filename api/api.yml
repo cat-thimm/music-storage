@@ -136,12 +136,15 @@ paths:
               properties:
                 labelId:
                   type: integer
+                titleId:
+                  type: integer
                 wav:
                   type: string
                   format: binary
               required:
                 - labelId
                 - wav
+                - titleId
       responses:
         "200":
           description: Represents audio from db
@@ -173,7 +176,7 @@ paths:
           description: The ID of the audio file to retrieve
           required: true
           schema:
-            type: string
+            type: integer
       tags:
         - audio-controller
       responses:
@@ -376,6 +379,79 @@ paths:
             "application/json":
               schema:
                 $ref: "#/components/schemas/AlbumTitleLinkView"
+  /album/{albumId}:
+    get:
+      summary: Returns specific album
+      operationId: getAlbum
+      parameters:
+        - name: albumId
+          in: path
+          required: true
+          schema:
+            type: integer
+      tags:
+        - album-controller
+      responses:
+        200:
+          description: OK
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/AlbumView"
+  /albumTitles:
+    get:
+      summary: Returns Titles that are part of the requested album
+      operationId: getAlbumTitles
+      parameters:
+        - name: albumId
+          in: query
+          required: true
+          schema:
+            type: integer
+      tags:
+        - album-controller
+      responses:
+        200:
+          description: OK
+          content:
+            "application/json":
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/TitleView"
+    post:
+      summary: Adds Title to Album
+      operationId: addTitleToAlbum
+      tags:
+        - album-controller
+      parameters:
+        - name: titleId
+          in: query
+          required: true
+          schema:
+            type: integer
+        - name: albumId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
+    delete:
+      summary: Adds Title to Album
+      operationId: deleteTitleFromAlbum
+      tags:
+        - album-controller
+      parameters:
+        - name: albumTitleLinkId
+          in: query
+          required: true
+          schema:
+            type: integer
+      responses:
+        200:
+          description: OK
   /album:
     get:
       summary: Returns all albums
@@ -391,6 +467,48 @@ paths:
                 type: array
                 items:
                   $ref: "#/components/schemas/AlbumView"
+
+    post:
+      summary: Uploads an album to the db
+      tags:
+        - album-controller
+      operationId: postAlbum
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                year:
+                  type: string
+                  format: date
+                  example: "2021-01-30"
+                file:
+                  type: string
+                  format: binary
+                text:
+                  type: string
+                labelId:
+                  type: integer
+                presskitId:
+                  type: integer
+              required:
+                - name
+                - year
+                - image
+                - text
+                - labelId
+                - presskitId
+                - file
+      responses:
+        "200":
+          description: Represents audio from db
+          content:
+            "application/json":
+              schema:
+                $ref: "#/components/schemas/AlbumView"
   /presskit:
     get:
       summary: Returns all presskits
@@ -568,9 +686,6 @@ components:
           type: integer
         label:
           $ref: "#/components/schemas/LabelView"
-        mp3:
-          type: string
-          format: byte
         wav:
           type: string
           format: byte
@@ -741,6 +856,10 @@ components:
         releaseDate:
           type: string
           format: date
+        label:
+          $ref: "#/components/schemas/LabelView"
+        presskitId:
+          $ref: "#/components/schemas/PresskitView"
     PresskitView:
       type: object
       properties:

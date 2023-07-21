@@ -68,29 +68,10 @@ export class AddSongComponent {
 
     const labelId = this.authenticationService.labelId;
 
-    const reader = new FileReader();
-
-    console.log('>>> wav', this.wavFile);
-    // @ts-ignore
-    reader.readAsDataURL(this.wavFile);
-
-    let wavFile;
-
-    reader.onload = async () => {
-      // @ts-ignore
-      wavFile = reader.result?.split(',')[1];
-    };
-
-    const imageReader = new FileReader();
-
-    // @ts-ignore
-    imageReader.readAsDataURL(this.cover);
-
-    let imageFile;
-    imageReader.onload = async () => {
-      // @ts-ignore
-      imageFile = imageReader.result?.split(',')[1];
-    };
+    const imageFile = await this.blobToBase64(this.cover);
+    console.log('>> img', imageFile);
+    const wav = await this.blobToBase64(this.wavFile);
+    console.log('>> wav', wav);
 
     if (
       artists &&
@@ -104,7 +85,7 @@ export class AddSongComponent {
       visible &&
       releaseDate &&
       imageFile &&
-      wavFile
+      wav
     )
       await this.musicService.createTitle({
         artists: artists,
@@ -112,16 +93,24 @@ export class AddSongComponent {
         instruments: instrument,
         moods: mood,
         genres: genre,
-        cover: imageFile,
+        cover: imageFile.split(',')[1] || '',
         gemaNr: gemaNr,
         label_id: labelId,
         name: songName,
         releaseDate: releaseDate,
         visible: visible,
-        wav: wavFile,
+        wav: wav.split(',')[1] || '',
       });
 
     stepper.reset();
+  }
+
+  blobToBase64(blob: any): any {
+    return new Promise((resolve, _) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => resolve(reader.result);
+    });
   }
 
   constructor(
