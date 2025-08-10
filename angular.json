@@ -64,19 +64,19 @@
 				"serve": {
 					"builder": "@angular-devkit/build-angular:dev-server",
 					"configurations": {
-						"production": {
-							"browserTarget": "music-storage:build:production"
+            "production": {
+              "buildTarget": "music-storage:build:production"
 						},
-						"development": {
-							"browserTarget": "music-storage:build:development"
+            "development": {
+              "buildTarget": "music-storage:build:development"
 						}
 					},
 					"defaultConfiguration": "development"
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
-					"options": {
-						"browserTarget": "music-storage:build"
+          "options": {
+            "buildTarget": "music-storage:build"
 					}
 				},
 				"test": {
