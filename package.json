@@ -23,7 +23,7 @@
     "@angular/platform-browser": "^17.3.12",
     "@angular/platform-browser-dynamic": "^17.3.12",
     "@angular/router": "^17.3.12",
-    "@ng-select/ng-select": "^11.0.0",
+    "@ng-select/ng-select": "^20.1.0",
     "@ngrx/effects": "^16.1.0",
     "@ngrx/store": "^16.1.0",
     "@openapitools/openapi-generator-cli": "^2.7.0",
