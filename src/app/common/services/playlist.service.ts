@@ -21,7 +21,7 @@ export class PlaylistService {
   publicPlaylistController = new PublicPlaylistControllerApi();
 
   async getPrivatePlaylists(
-    username: string
+      username: string | undefined
   ): Promise<PrivatePlaylistView[] | null> {
     try {
       const response = await this.privatePlaylistController.getPrivatePlaylists(

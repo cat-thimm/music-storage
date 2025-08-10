@@ -27,7 +27,7 @@
     "@ngrx/effects": "^16.1.0",
     "@ngrx/store": "^16.1.0",
     "@openapitools/openapi-generator-cli": "^2.7.0",
-    "axios": "^0.27.2",
+    "axios": "1.11.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"

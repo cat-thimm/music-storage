@@ -42,7 +42,7 @@ export class RegistrationComponent {
         role: this.isLabel ? UserViewRoleEnum.LABEL : UserViewRoleEnum.USER,
       });
 
-      this.router.navigate(['/home']);
+      await this.router.navigate(['/home']);
     } catch (e) {
       console.error('[Registration Component]: Error ', e);
     }
