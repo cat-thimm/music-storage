@@ -1,85 +1,89 @@
-<div class="wrapper" *ngIf="showModal">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title> Playlist erstellen </mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <form #form="ngForm" (submit)="createPlaylist()">
-        <h4>Playlist Name</h4>
-        <mat-form-field>
-          <mat-label>Playlist Name</mat-label>
-          <input
-            type="text"
-            matInput
-            [(ngModel)]="playlistName"
-            placeholder="Wie möchtest du diese Playlist nennen?"
-            name="playlistName"
-            required
-          />
-        </mat-form-field>
-        <h4>Beschreibung</h4>
-        <mat-form-field>
-          <mat-label>Beschreibung</mat-label>
-          <textarea
-            type="description"
-            matInput
-            [(ngModel)]="description"
-            placeholder="Kurze Beschreibung deiner Playlist"
-            name="description"
-          ></textarea>
-        </mat-form-field>
-        <h4>Thumbnail</h4>
-        <div class="row">
-          <div
-            class="center"
-            *ngIf="file && file.files && file.files.length > 0; else emptyFile"
-          >
-            {{ file!.files[0].name }}
+@if (showModal) {
+  <div class="wrapper">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title> Playlist erstellen</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form #form="ngForm" (submit)="createPlaylist()">
+          <h4>Playlist Name</h4>
+          <mat-form-field>
+            <mat-label>Playlist Name</mat-label>
+            <input
+              type="text"
+              matInput
+              [(ngModel)]="playlistName"
+              placeholder="Wie möchtest du diese Playlist nennen?"
+              name="playlistName"
+              required
+            />
+          </mat-form-field>
+          <h4>Beschreibung</h4>
+          <mat-form-field>
+            <mat-label>Beschreibung</mat-label>
+            <textarea
+              type="description"
+              matInput
+              [(ngModel)]="description"
+              placeholder="Kurze Beschreibung deiner Playlist"
+              name="description"
+            ></textarea>
+          </mat-form-field>
+          <h4>Thumbnail</h4>
+          <div class="row">
+            @if (file && file.files && file.files.length > 0) {
+              <div
+                class="center"
+              >
+                {{ file!.files![0].name }}
+              </div>
+            } @else {
+              <div class="center">Noch keine Datei ausgewählt</div>
+            }
+            <input
+              hidden
+              type="file"
+              accept="image/jpg"
+              #file
+              formControlName="file"
+              (change)="setFileData(file.files)"
+            />
+            <button mat-button color="primary" (click)="file.click()">
+              Hochladen
+              <mat-icon matPrefix>upload</mat-icon>
+            </button>
           </div>
-          <ng-template #emptyFile>
-            <div class="center">Noch keine Datei ausgewählt</div>
-          </ng-template>
 
-          <input
-            hidden
-            type="file"
-            accept="image/jpg"
-            #file
-            formControlName="file"
-            (change)="setFileData(file.files)"
-          />
-          <button mat-button color="primary" (click)="file.click()">
-            Hochladen
-            <mat-icon matPrefix>upload</mat-icon>
-          </button>
-        </div>
+          @for (result of resultsWithCheck; track result.id) {
+            <mat-checkbox
+              [ngModelOptions]="{ standalone: true }"
+              [(ngModel)]="result.checked"
+              color="primary"
+            >
+              {{ result.name }}
+            </mat-checkbox>
+          }
 
-        <mat-checkbox
-          [ngModelOptions]="{ standalone: true }"
-          *ngFor="let result of resultsWithCheck"
-          [(ngModel)]="result.checked"
-          color="primary"
-        >
-          {{ result.name }}
-        </mat-checkbox>
-
-        <div *ngIf="showToggleVisibility">
-          <h4>Sichtbarkeit</h4>
-          <mat-slide-toggle
-            color="primary"
-            [(ngModel)]="isVisible"
-            name="isLabel"
-            >Für Nutzer sichtbar</mat-slide-toggle
-          >
-        </div>
-
-        <div class="button-wrapper">
-          <button mat-button (click)="closeModal()">Abbrechen</button>
-          <button mat-raised-button color="primary" type="submit">
-            Erstellen
-          </button>
-        </div>
-      </form>
-    </mat-card-content>
-  </mat-card>
-</div>
+          @if (showToggleVisibility) {
+            <div>
+              <h4>Sichtbarkeit</h4>
+              <mat-slide-toggle
+                color="primary"
+                [(ngModel)]="isVisible"
+                name="isLabel"
+              >Für Nutzer sichtbar
+              </mat-slide-toggle
+              >
+            </div>
+          }
+          <div class="button-wrapper">
+            <button mat-button (click)="closeModal()">Abbrechen</button>
+            <button mat-raised-button color="primary" type="submit">
+              Erstellen
+            </button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+}

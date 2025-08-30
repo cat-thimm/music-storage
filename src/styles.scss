@@ -1,38 +1,34 @@
 @use '@angular/material' as mat;
-@import "~@ng-select/ng-select/themes/material.theme.css";
 
-@include mat.core();
+////@include mat.core();
+//
+///* Default: dark */
+////:root {
+////  color-scheme: dark;
+////  @include mat.theme((
+////    color: (
+////      theme-type: dark,
+////      primary: mat.$rose-palette,   // was mat.$pink-palette
+////      tertiary: mat.$azure-palette, // was mat.$blue-grey-palette
+////    ),
+////    typography: Roboto,
+////    density: 0,
+////  ));
+////}
 
-// Define a dark theme
-$dark-theme: mat.define-dark-theme((
-  color: (
-    primary: mat.define-palette(mat.$pink-palette),
-    accent: mat.define-palette(mat.$blue-grey-palette),
-  ),
-  // Only include `typography` and `density` in the default dark theme.
-  typography: mat.define-typography-config(),
-  density: 0,
-));
-
-// Define a light theme
-$light-theme: mat.define-light-theme((
-  color: (
-    primary: mat.define-palette(mat.$indigo-palette),
-    accent: mat.define-palette(mat.$pink-palette),
-  ),
-));
-
-// Apply the dark theme by default
-@include mat.core-theme($dark-theme);
-@include mat.button-theme($dark-theme);
-
-// Apply the light theme only when the user prefers light themes.
-@media (prefers-color-scheme: light) {
-  // Use the `-color` mixins to only apply color styles without reapplying the same
-  // typography and density styles.
-  @include mat.core-color($light-theme);
-  @include mat.button-color($light-theme);
-}
+///* Prefer light scheme when the OS/browser asks for it */
+//@media (prefers-color-scheme: light) {
+//  :root {
+//    color-scheme: light;
+//    @include mat.theme((
+//      color: (
+//        theme-type: light,
+//        primary: mat.$indigo-palette,
+//        tertiary: mat.$pink-palette,
+//      )
+//    ));
+//  }
+//}
 
 .login-container {
   display: flex;

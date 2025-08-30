@@ -28,17 +28,18 @@
         >
         </app-overview>
       </mat-tab>
-      <mat-tab
-        label="Neuer Song"
-        *ngIf="authenticationService.userRole === 'LABEL'"
-      >
-        <app-add-song
-          [artists]="dropdownArtist$"
-          [genres]="dropdownGenre$"
-          [instruments]="dropdownInstrument$"
-          [moods]="dropdownMood$"
-        ></app-add-song>
-      </mat-tab>
+      @if(authenticationService.userRole === 'LABEL') {
+        <mat-tab
+          label="Neuer Song"
+        >
+          <app-add-song
+            [artists]="dropdownArtist$"
+            [genres]="dropdownGenre$"
+            [instruments]="dropdownInstrument$"
+            [moods]="dropdownMood$"
+          ></app-add-song>
+        </mat-tab>
+      }
     </mat-tab-group>
   </mat-card>
 </div>

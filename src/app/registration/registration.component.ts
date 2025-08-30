@@ -1,14 +1,36 @@
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 
 import { UserViewRoleEnum } from '../../api';
 
 import { AuthenticationService } from '../common/services/authentication.service';
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
+import {FormsModule} from "@angular/forms";
+import {MatFormFieldModule} from '@angular/material/form-field';
+
+
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.scss', '../../styles.scss'],
+  imports: [
+    RouterLink,
+    MatCardActions,
+    FormsModule,
+    MatFormFieldModule,
+    MatSlideToggle,
+    MatCardContent,
+    MatCardTitle,
+    MatCardHeader,
+    MatCard,
+    MatInput,
+    MatButton
+  ],
+  standalone: true
 })
 export class RegistrationComponent {
   name = '';

@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig } from 'axios';
-const attachToken = (config: AxiosRequestConfig) => {
+const attachToken = (config: any) => {
   const token = localStorage.getItem('token');
 
   config.headers = {

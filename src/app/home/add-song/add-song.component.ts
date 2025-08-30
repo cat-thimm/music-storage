@@ -1,15 +1,38 @@
 import { Component, Input } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { MatStepper } from '@angular/material/stepper';
-import { DropdownOption } from '../../common/models/dropdown-option';
+import {FormBuilder, ReactiveFormsModule, Validators} from '@angular/forms';
+import {MatStep, MatStepper, MatStepperNext, MatStepperPrevious} from '@angular/material/stepper';
 import { ArtistView, GenreView, InstrumentView, MoodView } from 'src/api';
 import { MusicService } from 'src/app/common/services/music.service';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatSelectModule} from "@angular/material/select";
+import {MatIconModule} from "@angular/material/icon";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-add-song',
   templateUrl: './add-song.component.html',
   styleUrls: ['./add-song.component.scss'],
+  imports: [
+    MatIconModule,
+    ReactiveFormsModule,
+    MatStep,
+    MatStepper,
+    MatFormFieldModule,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatSlideToggle,
+    MatSelectModule,
+    MatDatepickerInput,
+    MatInput,
+    MatButton,
+    MatStepperNext,
+    MatStepperPrevious
+  ],
+  standalone: true
 })
 export class AddSongComponent {
   @Input() artists: ArtistView[] | null = null;

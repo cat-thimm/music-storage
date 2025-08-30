@@ -1,12 +1,12 @@
 <mat-stepper linear #stepper>
-  <mat-step [stepControl]="songMetaDataGroup">
+  <mat-step [stepControl]="songMetaDataGroup" label="Song-Daten">
     <form [formGroup]="songMetaDataGroup">
-      <ng-template matStepLabel>Song-Daten</ng-template>
       <p>
         Im ersten Schritten bitten wir Sie, einen Song Titel einzugeben sowie
         Ihren Song im WAV-Format hochzuladen.
       </p>
       <br />
+
       <h4>Song Titel</h4>
       <mat-form-field>
         <mat-label>Song Titel</mat-label>
@@ -17,6 +17,7 @@
           required
         />
       </mat-form-field>
+
       <h4>Release Datum</h4>
       <mat-form-field>
         <mat-label>Choose a date</mat-label>
@@ -26,12 +27,10 @@
           formControlName="releaseDate"
         />
         <mat-hint>MM/DD/YYYY</mat-hint>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
       </mat-form-field>
+
       <h4>GEMA Nummer</h4>
       <mat-form-field>
         <mat-label>GEMA Nummer</mat-label>
@@ -44,20 +43,19 @@
       </mat-form-field>
 
       <h4>Sichtbarkeit</h4>
-      <mat-slide-toggle color="primary" formControlName="visible" name="isLabel"
-        >Für Nutzer sichtbar</mat-slide-toggle
-      >
+      <mat-slide-toggle color="primary" formControlName="visible" name="isLabel">
+        Für Nutzer sichtbar
+      </mat-slide-toggle>
+
       <h4>WAV-Datei</h4>
       <div class="row">
-        <div
-          class="center"
-          *ngIf="file && file.files && file.files.length > 0; else emptyFile"
-        >
-          {{ file!.files[0].name }}
-        </div>
-        <ng-template #emptyFile>
+        @if (file?.files?.length) {
+          <div class="center">
+            {{ file!.files![0].name }}
+          </div>
+        } @else {
           <div class="center">Noch keine Datei ausgewählt</div>
-        </ng-template>
+        }
 
         <input
           hidden
@@ -69,34 +67,33 @@
         />
         <button mat-button color="primary" (click)="file.click()">
           Hochladen
-          <mat-icon matPrefix>upload</mat-icon>
+          <mat-icon>upload</mat-icon>
         </button>
       </div>
+
       <div class="next-button">
-        <button
-          mat-button
-          matStepperNext
-          [disabled]="songMetaDataGroup.invalid"
-        >
+        <button mat-button matStepperNext [disabled]="songMetaDataGroup.invalid">
           Weiter
         </button>
       </div>
     </form>
   </mat-step>
+
   <mat-step [stepControl]="tagGroup" label="Füge Tags hinzu">
     <p>
       Bitte konfigurieren Sie Tags, um Ihren Song besser auffindbar zu machen.
       Anhand Ihrer Eingaben kann die Suche von Songs vereinfacht werden.
     </p>
     <br />
+
     <form [formGroup]="tagGroup" class="dropdown-wrapper">
       <h4>Künstler</h4>
       <mat-form-field>
         <mat-label>Künstler</mat-label>
         <mat-select formControlName="artist" multiple>
-          <mat-option *ngFor="let artist of artists" [value]="artist.name">{{
-            artist.name
-          }}</mat-option>
+          @for (artist of artists; track artist.name) {
+            <mat-option [value]="artist.name">{{ artist.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
 
@@ -104,24 +101,25 @@
       <mat-form-field>
         <mat-label>Instrumente</mat-label>
         <mat-select formControlName="instrument" multiple>
-          <mat-option
-            *ngFor="let instrument of instruments"
-            [value]="instrument.name"
-            >{{ instrument.name }}</mat-option
-          >
+          @for (instrument of instruments; track instrument.name) {
+            <mat-option [value]="instrument.name">
+              {{ instrument.name }}
+            </mat-option>
+          }
         </mat-select>
       </mat-form-field>
+
       <h4>Genre</h4>
       <mat-form-field>
         <mat-label>Genre</mat-label>
         <mat-select formControlName="genre" multiple>
-          <mat-option *ngFor="let genre of genres" [value]="genre.name">{{
-            genre.name
-          }}</mat-option>
+          @for (genre of genres; track genre.name) {
+            <mat-option [value]="genre.name">{{ genre.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
-      <h4>Tempo</h4>
 
+      <h4>Tempo</h4>
       <mat-form-field>
         <input
           type="number"
@@ -138,12 +136,13 @@
       <mat-form-field>
         <mat-label>Stimmung</mat-label>
         <mat-select formControlName="mood" multiple>
-          <mat-option *ngFor="let mood of moods" [value]="mood.name">{{
-            mood.name
-          }}</mat-option>
+          @for (mood of moods; track mood.name) {
+            <mat-option [value]="mood.name">{{ mood.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </form>
+
     <div class="next-button">
       <button mat-button matStepperPrevious>Zurück</button>
       <button mat-button matStepperNext [disabled]="tagGroup.invalid">
@@ -151,28 +150,24 @@
       </button>
     </div>
   </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Vorschau</ng-template>
+
+  <mat-step label="Vorschau">
     <p>
       Fügen Sie im letzten Schritt ein Song-Cover hinzu, um Ihren Song-Upload
       fertigzustellen.
     </p>
     <br />
+
     <form [formGroup]="previewGroup">
       <h4>Song Cover</h4>
       <div class="row">
-        <div
-          class="center"
-          *ngIf="
-            coverFile && coverFile.files && coverFile.files.length > 0;
-            else emptyFile
-          "
-        >
-          {{ coverFile!.files[0].name }}
-        </div>
-        <ng-template #emptyFile
-          ><div class="center">Noch keine Datei ausgewählt</div></ng-template
-        >
+        @if (coverFile?.files?.length) {
+          <div class="center">
+            {{ coverFile!.files![0].name }}
+          </div>
+        } @else {
+          <div class="center">Noch keine Datei ausgewählt</div>
+        }
 
         <input
           hidden
@@ -184,7 +179,7 @@
         />
         <button mat-button color="primary" (click)="coverFile.click()">
           Hochladen
-          <mat-icon matPrefix>upload</mat-icon>
+          <mat-icon>upload</mat-icon>
         </button>
       </div>
     </form>

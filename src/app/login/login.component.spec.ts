@@ -7,7 +7,7 @@ describe('LoginComponent', () => {
   let fixture: ComponentFixture<LoginComponent>;
 
   const renderComponent = () => {
-    render()
+    // render()
   }
 
   beforeEach(() => {

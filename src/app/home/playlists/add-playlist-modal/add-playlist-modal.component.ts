@@ -7,11 +7,33 @@ import {
 } from 'src/api';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { PlaylistService } from 'src/app/common/services/playlist.service';
+import {FormsModule} from "@angular/forms";
+import {MatSlideToggle} from "@angular/material/slide-toggle";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatButton} from "@angular/material/button";
+import {MatInput} from "@angular/material/input";
 
 @Component({
   selector: 'app-add-playlist-modal',
   templateUrl: './add-playlist-modal.component.html',
   styleUrls: ['./add-playlist-modal.component.scss'],
+  imports: [
+    FormsModule,
+    MatSlideToggle,
+    MatCheckbox,
+    MatFormFieldModule,
+    MatCardContent,
+    MatCardTitle,
+    MatCard,
+    MatCardHeader,
+    MatIconModule,
+    MatButton,
+    MatInput
+  ],
+  standalone: true
 })
 export class AddPlaylistModalComponent implements OnInit {
   @Input() showModal = false;

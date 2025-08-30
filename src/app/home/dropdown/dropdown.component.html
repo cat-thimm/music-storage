@@ -2,9 +2,11 @@
   <mat-form-field>
     <mat-label>{{ title }}</mat-label>
     <mat-select>
-      <mat-option *ngFor="let option of dropdown" [(ngModel)]="selected">
-        {{ option.name }}
-      </mat-option>
+      @for (option of dropdown; track option.id) {
+        <mat-option [(ngModel)]="selected">
+          {{ option.name }}
+        </mat-option>
+      }
     </mat-select>
   </mat-form-field>
 </div>
