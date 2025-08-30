@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 
-import { PageEvent } from '@angular/material/paginator';
+import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {
   ArtistView,
   GenreView,
@@ -9,11 +9,35 @@ import {
   TitleControllerApiSearchTitlesRequest,
   TitleView,
 } from 'src/api';
+import {AddAlbumComponent} from "./add-album/add-album.component";
+import {TitleCardComponent} from "./title-card/title-card.component";
+import {FormsModule} from "@angular/forms";
+
+import {MatCardContent} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import {MatSelectModule} from "@angular/material/select";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss', '../../../styles.scss'],
+  imports: [
+    AddAlbumComponent,
+    MatPaginator,
+    TitleCardComponent,
+    MatFormFieldModule,
+    FormsModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatCardContent,
+    MatIconModule,
+    MatInput,
+    MatButton
+  ],
+  standalone: true
 })
 export class OverviewComponent {
   @Input() dropdownGenre: GenreView[] | null = [];

@@ -1,6 +1,7 @@
 <mat-card-content class="col">
   <div class="row">
     <mat-form-field class="search-wrapper">
+      <mat-icon matPrefix>search</mat-icon>
       <input
         type="search"
         matInput
@@ -10,58 +11,56 @@
         [(ngModel)]="searchString"
         (keyup.enter)="search()"
       />
-      <mat-icon matPrefix>search</mat-icon>
     </mat-form-field>
+
     <button mat-raised-button color="primary" (click)="toggleModal()">
       Neues Album
     </button>
   </div>
 
   <h2>Suche filtern</h2>
+
   <div class="row">
     <div class="select-wrapper">
       <mat-form-field>
         <mat-label>Genre</mat-label>
         <mat-select [(value)]="selectedGenre">
-          <mat-option *ngFor="let option of dropdownGenre" [value]="option.id">
-            {{ option.name }}
-          </mat-option>
+          @for (option of dropdownGenre; track option.id) {
+            <mat-option [value]="option.id">{{ option.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
+
     <div class="select-wrapper">
       <mat-form-field>
         <mat-label>Artist</mat-label>
         <mat-select [(ngModel)]="selectedArtist">
-          <mat-option
-            *ngFor="let option of dropdownArtist"
-            [value]="option.name"
-          >
-            {{ option.name }}
-          </mat-option>
+          @for (option of dropdownArtist; track option.name) {
+            <mat-option [value]="option.name">{{ option.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
+
     <div class="select-wrapper">
       <mat-form-field>
         <mat-label>Mood</mat-label>
         <mat-select [(ngModel)]="selectedMood">
-          <mat-option *ngFor="let option of dropdownMood" [value]="option.id">
-            {{ option.name }}
-          </mat-option>
+          @for (option of dropdownMood; track option.id) {
+            <mat-option [value]="option.id">{{ option.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
+
     <div class="select-wrapper">
       <mat-form-field>
         <mat-label>Instrument</mat-label>
         <mat-select [(ngModel)]="selectedInstrument">
-          <mat-option
-            *ngFor="let option of dropdownInstrument"
-            [value]="option.id"
-          >
-            {{ option.name }}
-          </mat-option>
+          @for (option of dropdownInstrument; track option.id) {
+            <mat-option [value]="option.id">{{ option.name }}</mat-option>
+          }
         </mat-select>
       </mat-form-field>
     </div>
@@ -79,16 +78,18 @@
       />
     </mat-form-field>
   </div>
+
   <button mat-button color="primary" class="search-button" (click)="search()">
     Songtitel Suchen
   </button>
 
-  <div class="title-wrapper" *ngIf="searchResults && searchResults.length > 0">
-    <app-title-card
-      *ngFor="let result of currentResults()"
-      [title]="result"
-    ></app-title-card>
-  </div>
+  @if (searchResults?.length) {
+    <div class="title-wrapper">
+      @for (result of currentResults(); track $index) {
+        <app-title-card [title]="result"></app-title-card>
+      }
+    </div>
+  }
 
   <mat-paginator
     [length]="searchResults?.length || 0"

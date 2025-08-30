@@ -1,19 +1,23 @@
 <mat-card>
   <mat-card-header>
     <mat-card-title>
-      <mat-icon> featured_play_list </mat-icon>
+      <mat-icon> featured_play_list</mat-icon>
       Playlists
     </mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <mat-list>
-      <mat-list-item *ngFor="let playlist of playlists">
-        <button mat-button color="secondary">{{ playlist.name }}</button>
-      </mat-list-item>
-    </mat-list>
-    <p *ngIf="(playlists && playlists.length === 0) || !playlists">
-      Noch keine Playlists erstellt.
-    </p>
+    @for (playlist of playlists; track playlist.id) {
+      <mat-list>
+        <mat-list-item>
+          <button mat-button color="secondary">{{ playlist.name }}</button>
+        </mat-list-item>
+      </mat-list>
+    }
+    @if ((playlists && playlists.length === 0) || !playlists) {
+      <p>
+        Noch keine Playlists erstellt.
+      </p>
+    }
     <button mat-raised-button color="primary" (click)="toggleModal()">
       Playlist erstellen
     </button>

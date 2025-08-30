@@ -1,14 +1,27 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit,  } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Subject } from 'rxjs';
 
 import { TitleView } from 'src/api';
 import { MusicService } from 'src/app/common/services/music.service';
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
+import {MatIconModule} from "@angular/material/icon";
+import {MatButton, MatIconButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-title-card',
   templateUrl: './title-card.component.html',
   styleUrls: ['./title-card.component.scss'],
+  imports: [
+    MatCard,
+    MatCardContent,
+    MatCardHeader,
+    MatCardTitle,
+    MatIconModule,
+    MatCardActions,
+    MatIconButton,
+    MatButton
+  ],
+  standalone: true
 })
 export class TitleCardComponent implements OnInit {
   @Input() title: TitleView | null = null;

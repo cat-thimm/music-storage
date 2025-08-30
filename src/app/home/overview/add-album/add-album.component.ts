@@ -1,12 +1,36 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TitleView, UserViewRoleEnum } from 'src/api';
+import { TitleView } from 'src/api';
 import { AuthenticationService } from 'src/app/common/services/authentication.service';
 import { MusicService } from 'src/app/common/services/music.service';
+import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
+import {FormsModule} from "@angular/forms";
+import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";
+import {MatCheckbox} from "@angular/material/checkbox";
+import {MatIconModule} from "@angular/material/icon";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInput} from "@angular/material/input";
+import {MatButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-add-album',
   templateUrl: './add-album.component.html',
   styleUrls: ['./add-album.component.scss'],
+  imports: [
+    MatCard,
+    MatCardHeader,
+    MatCardTitle,
+    MatCardContent,
+    MatFormFieldModule,
+    FormsModule,
+    MatIconModule,
+    MatDatepickerToggle,
+    MatDatepicker,
+    MatCheckbox,
+    MatDatepickerInput,
+    MatInput,
+    MatButton
+  ],
+  standalone: true
 })
 export class AddAlbumComponent implements OnInit {
   @Input() showModal = false;

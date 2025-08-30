@@ -1,12 +1,15 @@
 <mat-card color="black">
   <mat-card-content class="image-wrapper">
-    <img [src]="cover" />
+    <img [src]="cover" alt="Cover Image"/>
   </mat-card-content>
   <mat-card-header>
     <mat-card-title>{{ title?.name }}</mat-card-title>
     <button mat-icon-button color="accent" (click)="playAudio(title?.id || 1)">
-      <mat-icon *ngIf="!audioStarted">play_arrow</mat-icon>
-      <mat-icon *ngIf="audioStarted">stop</mat-icon>
+      @if (!audioStarted) {
+        <mat-icon>play_arrow</mat-icon>
+      } @else {
+        <mat-icon>stop</mat-icon>
+      }
     </button>
   </mat-card-header>
   <mat-card-content>
@@ -19,7 +22,7 @@
       color="accent"
       (click)="downloadSong(title?.id, title?.name)"
     >
-      <mat-icon> download </mat-icon>
+      <mat-icon> download</mat-icon>
       Herunterladen
     </button>
   </mat-card-actions>

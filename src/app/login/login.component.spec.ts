@@ -6,6 +6,10 @@ describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
 
+  const renderComponent = () => {
+    // render()
+  }
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [LoginComponent]
