@@ -1,45 +1,39 @@
-<script src="add-song/add-song.component.ts"></script>
-<p>
-  <mat-toolbar color="">
-    <span>Music Storage</span>
-    <button mat-button [routerLink]="['/login']" (click)="logout()">
-      <mat-icon>logout</mat-icon>
-      Logout
-    </button>
-  </mat-toolbar>
-</p>
+<div class="layout">
+  <p>
+    <mat-toolbar color="primary">
+      <span>Music Storage</span>
+      <button mat-button [routerLink]="['/login']" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </mat-toolbar>
+  </p>
 
-<div class="row">
-  <app-playlists
-    [playlists]="privatePlaylist$ ? privatePlaylist$ : publicPlaylists$"
-    [searchResults]="searchResults$"
-  ></app-playlists>
-
-  <mat-card class="container">
-    <mat-tab-group dynamicHeight color="accent">
-      <mat-tab label="Songübersicht">
-        <app-overview
-          [dropdownArtist]="dropdownArtist$"
-          [dropdownGenre]="dropdownGenre$"
-          [dropdownInstrument]="dropdownInstrument$"
-          [dropdownMood]="dropdownMood$"
-          [searchResults]="searchResults$"
-          (onSearch)="searchTitle($event)"
-        >
-        </app-overview>
-      </mat-tab>
-      @if(authenticationService.userRole === 'LABEL') {
-        <mat-tab
-          label="Neuer Song"
-        >
-          <app-add-song
-            [artists]="dropdownArtist$"
-            [genres]="dropdownGenre$"
-            [instruments]="dropdownInstrument$"
-            [moods]="dropdownMood$"
-          ></app-add-song>
+  <div class="row">
+    <mat-card class="container">
+      <mat-tab-group dynamicHeight color="primary">
+        <mat-tab label="Songübersicht">
+          <app-overview
+            [dropdownArtist]="dropdownArtist$"
+            [dropdownGenre]="dropdownGenre$"
+            [dropdownInstrument]="dropdownInstrument$"
+            [dropdownMood]="dropdownMood$"
+            [searchResults]="searchResults$"
+            (onSearch)="searchTitle($event)"
+          ></app-overview>
         </mat-tab>
-      }
-    </mat-tab-group>
-  </mat-card>
+
+        @if (authenticationService.userRole === UserRole.LABEL) {
+          <mat-tab label="Neuer Song">
+            <app-add-song
+              [artists]="dropdownArtist$"
+              [genres]="dropdownGenre$"
+              [instruments]="dropdownInstrument$"
+              [moods]="dropdownMood$"
+            ></app-add-song>
+          </mat-tab>
+        }
+      </mat-tab-group>
+    </mat-card>
+  </div>
 </div>

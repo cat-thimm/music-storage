@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {MatPaginator, PageEvent} from '@angular/material/paginator';
 import {
@@ -24,6 +24,7 @@ import {MatButton} from "@angular/material/button";
   selector: 'app-overview',
   templateUrl: './overview.component.html',
   styleUrls: ['./overview.component.scss', '../../../styles.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     AddAlbumComponent,
     MatPaginator,

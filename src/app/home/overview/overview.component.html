@@ -83,6 +83,7 @@
     Songtitel Suchen
   </button>
 
+  {{searchResults}}
   @if (searchResults?.length) {
     <div class="title-wrapper">
       @for (result of currentResults(); track $index) {

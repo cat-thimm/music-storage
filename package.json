@@ -9,7 +9,8 @@
     "test": "ng test",
     "openapi": "npm run openapi:clear && npm run openapi:gen",
     "openapi:gen": "openapi-generator-cli generate",
-    "openapi:clear": "rm -rf src/app/api"
+    "openapi:clear": "rm -rf src/app/api",
+    "e2e": "ng e2e"
   },
   "private": true,
   "dependencies": {
@@ -36,14 +37,17 @@
     "@angular/cli": "20.2.1",
     "@angular/compiler-cli": "20.2.2",
     "@angular/language-service": "20.2.2",
+    "@playwright/test": "1.55.0",
+    "@testing-library/angular": "^18.0.0",
+    "@testing-library/dom": "^10.0.0",
+    "@testing-library/jest-dom": "^6.8.0",
+    "@testing-library/user-event": "^14.6.1",
     "@types/jasmine": "^5.1.9",
     "jasmine-core": "^5.9.0",
-    "karma": "~6.4.0",
-    "karma-chrome-launcher": "~3.2.0",
-    "karma-coverage": "~2.2.0",
-    "karma-jasmine": "~5.1.0",
-    "karma-jasmine-html-reporter": "~2.1.0",
+    "jsdom": "^26.1.0",
+    "playwright-ng-schematics": "^2.1.0",
     "schematics-scss-migrate": "^2.3.17",
-    "typescript": "^5.9.0"
+    "typescript": "^5.9.0",
+    "vitest": "^3.2.4"
   }
 }
