@@ -102,8 +102,4 @@ export class HomeComponent implements OnInit {
     this.authenticationService.userRole = undefined;
     localStorage.clear();
   }
-
-  // get playlists() {
-  //   return this.privatePlaylist$ ?? this.publicPlaylists$;
-  // }
 }
