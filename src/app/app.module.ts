@@ -48,4 +48,5 @@ import { AddAlbumComponent } from './home/overview/add-album/add-album.component
 })
 export class AppModule {}
 
+
 // keep your existing bootstrap call (preferably move it to main.ts)

@@ -1,17 +1,31 @@
-import '@testing-library/jest-dom/vitest';
-import { afterEach, vi } from 'vitest';
-import '@analogjs/vitest-angular/setup-zone';
+import { NgModule } from '@angular/core';
 import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
-import { getTestBed } from '@angular/core/testing';
+  ɵgetCleanupHook as getCleanupHook,
+  getTestBed
+} from '@angular/core/testing';
+import {
+  BrowserTestingModule,
+  platformBrowserTesting
+} from '@angular/platform-browser/testing';
+import { afterEach, beforeEach } from 'vitest';
+import '@testing-library/jest-dom/vitest';
 
-afterEach(() => {
-  vi.restoreAllMocks();
-});
+
+const providers: NgModule['providers'] = [];
+
+beforeEach(getCleanupHook(false));
+afterEach(getCleanupHook(true));
+
+@NgModule({ providers })
+export class TestModule {}
 
 getTestBed().initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
+  [BrowserTestingModule, TestModule],
+  platformBrowserTesting(),
+  {
+    errorOnUnknownElements: true,
+    errorOnUnknownProperties: true
+  }
 );
+
+
