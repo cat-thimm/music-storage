@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 import { AuthenticationService } from '../common/services/authentication.service';
 
-// Angular Material (standalone imports)
 import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInput } from '@angular/material/input';
@@ -18,12 +17,9 @@ import { MatButton } from '@angular/material/button';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss', '../../styles.scss'],
   imports: [
-    // Angular
     CommonModule,
     FormsModule,
     RouterLink,
-
-    // Material
     MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions,
     MatFormFieldModule,
     MatInput,
