@@ -7,6 +7,7 @@ import { vi, describe, it, expect } from 'vitest';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../common/services/authentication.service';
+import {provideZonelessChangeDetection} from "@angular/core";
 
 class AuthStub {
   user: any = null;
@@ -19,6 +20,7 @@ async function setup(auth = new AuthStub()) {
     providers: [
       provideNoopAnimations(),
       provideRouter([{ path: 'home', component: DummyCmp }]),
+      provideZonelessChangeDetection(),
       { provide: AuthenticationService, useValue: auth },
     ],
   });
@@ -31,6 +33,22 @@ async function setup(auth = new AuthStub()) {
 }
 
 describe('LoginComponent', () => {
+  beforeAll(async () => {
+    try {
+      if (typeof process !== 'undefined' && process.versions?.node) {
+        const { readFileSync } = await import('node:fs');
+        const { ɵresolveComponentResources: resolveComponentResources } =
+          await import('@angular/core');
+
+        await resolveComponentResources(url =>
+          Promise.resolve(readFileSync(new URL(url, import.meta.url), 'utf-8'))
+        );
+      }
+    } catch {
+      return;
+    }
+  });
+
   it('disables submit until both fields are valid', async () => {
     const { submit, nameInput, passInput } = await setup();
 
@@ -43,5 +61,4 @@ describe('LoginComponent', () => {
     await userEvent.type(passInput, 'secret');
     await waitFor(() => expect(submit).toBeEnabled());
   });
-
 });

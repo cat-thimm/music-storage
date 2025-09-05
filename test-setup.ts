@@ -10,25 +10,6 @@ import {
 import { afterEach, beforeEach, vi } from 'vitest';
 import '@testing-library/jest-dom/vitest';
 
-
-const providers: NgModule['providers'] = [];
-
-beforeEach(getCleanupHook(false));
-afterEach(getCleanupHook(true));
-
-@NgModule({ providers })
-export class TestModule {}
-
-getTestBed().initTestEnvironment(
-  [BrowserTestingModule, TestModule],
-  platformBrowserTesting(),
-  {
-    errorOnUnknownElements: true,
-    errorOnUnknownProperties: true
-  }
-);
-
-
 vi.mock('axios', () => {
   return {
     default: {
@@ -50,5 +31,39 @@ vi.mock('axios', () => {
     },
   };
 });
+
+const localStorageMock = (() => {
+  let store: { [key: string]: string } = {};
+
+  return {
+    getItem: (key: string) => store[key] || null,
+    setItem: (key: string, value: string) => {
+      store[key] = value.toString();
+    }
+  };
+})();
+
+Object.defineProperty(window, 'localStorage', {
+  value: localStorageMock,
+});
+
+const providers: NgModule['providers'] = [];
+
+beforeEach(getCleanupHook(false));
+afterEach(getCleanupHook(true));
+
+@NgModule({ providers })
+export class TestModule {}
+
+getTestBed().initTestEnvironment(
+  [BrowserTestingModule, TestModule],
+  platformBrowserTesting(),
+  {
+    errorOnUnknownElements: true,
+    errorOnUnknownProperties: true
+  }
+);
+
+
 
 

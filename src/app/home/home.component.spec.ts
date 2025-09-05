@@ -11,9 +11,6 @@ import {provideNativeDateAdapter} from '@angular/material/core';
 import {HomeComponent} from './home.component';
 
 import {AuthenticationService} from '../common/services/authentication.service';
-import {of} from "rxjs";
-import {MusicService} from "../common/services/music.service";
-import {TabsService} from "../common/services/tabs.service";
 
 
 class AuthStub {
