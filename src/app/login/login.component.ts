@@ -1,14 +1,15 @@
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {ChangeDetectionStrategy, Component, inject, signal} from '@angular/core';
+import {Router, RouterLink} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { AuthenticationService } from '../common/services/authentication.service';
+import {AuthenticationService} from '../common/services/authentication.service';
 
-import { MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions } from '@angular/material/card';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInput } from '@angular/material/input';
-import { MatButton } from '@angular/material/button';
+import {MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions} from '@angular/material/card';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatInput} from '@angular/material/input';
+import {MatButton} from '@angular/material/button';
+import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ export class LoginComponent {
   password = '';
 
   readonly loading = signal(false);
+  readonly errorMessage = signal('');
 
   async loginUser(): Promise<void> {
     if (!this.username || !this.password) return;
@@ -48,10 +50,16 @@ export class LoginComponent {
         alert('User was not found');
       }
     } catch (err) {
-      console.error('Login failed', err);
-      alert('Login fehlgeschlagen.');
+      this.errorMessage.set('Login fehlgeschlagen.');
+      throw new Error("Login fehlgeschlagen.");
     } finally {
       this.loading.set(false);
     }
   }
+
+  public throwTestError(): void {
+    throw new Error("Sentry Test Error");
+  }
+
+  protected readonly error = error;
 }

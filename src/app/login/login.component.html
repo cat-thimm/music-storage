@@ -1,7 +1,9 @@
+<script src="login.component.ts"></script>
 <mat-card class="login-container">
   <mat-card-header>
     <mat-card-title>Music DB - LOGIN</mat-card-title>
   </mat-card-header>
+
   <form #form="ngForm" class="col form" (submit)="loginUser()">
     <mat-card-content class="col">
       <mat-form-field>
@@ -12,7 +14,9 @@
           [(ngModel)]="username"
           placeholder="Name"
           name="username"
+          title="name"
           required
+          autofocus
         />
       </mat-form-field>
       <mat-form-field>
@@ -22,11 +26,15 @@
           matInput
           placeholder="Password"
           name="password"
+          title="passwort"
           [(ngModel)]="password"
           required
         />
       </mat-form-field>
     </mat-card-content>
+    @if (errorMessage()) {
+        <mat-error role="alert">{{errorMessage()}}</mat-error>
+    }
     <mat-card-actions class="col">
       <button type="submit" mat-button color="primary" [disabled]="form.invalid || loading()">
         Anmelden

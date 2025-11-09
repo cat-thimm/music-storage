@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { TitleView } from 'src/api';
-import { AuthenticationService } from 'src/app/common/services/authentication.service';
-import { MusicService } from 'src/app/common/services/music.service';
+import { TitleView } from '../../../../api';
+import { AuthenticationService } from '../../../common/services/authentication.service';
+import { MusicService } from '../../../common/services/music.service';
 import {MatCard, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {FormsModule} from "@angular/forms";
 import {MatDatepicker, MatDatepickerInput, MatDatepickerToggle} from "@angular/material/datepicker";

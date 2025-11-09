@@ -9,7 +9,7 @@ import {
   TitleControllerApiSearchTitlesRequest,
   TitleUploadDto,
   TitleView,
-} from 'src/api';
+} from '../../../api';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class MusicService {
   async getAllTitles(): Promise<TitleView[] | null> {
     try {
       const response = await this.titleController.getTitles();
-      if (response.data) {
+      if (response && response.data) {
         return response.data;
       }
       return null;

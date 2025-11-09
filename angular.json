@@ -50,7 +50,8 @@
                   "maximumError": "4kb"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "sourceMap": true
             },
             "development": {
               "optimization": false,
@@ -80,11 +81,9 @@
           }
         },
         "test": {
-          "builder": "@angular/build:unit-test",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "tsConfig": "tsconfig.spec.json",
-            "runner": "vitest",
-            "buildTarget": "::development"
+            "configPath": "./jest.config.ts"
           }
         },
         "e2e": {

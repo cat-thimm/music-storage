@@ -1,17 +1,19 @@
-import '@testing-library/jest-dom/vitest';
+import '@testing-library/jest-dom';
 import {render, screen, waitFor} from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
-import {provideNoopAnimations} from '@angular/platform-browser/animations';
 import {provideRouter, Router} from '@angular/router';
 import {TestBed} from '@angular/core/testing';
-import {CUSTOM_ELEMENTS_SCHEMA} from '@angular/core';
-import {vi, describe, it, expect} from 'vitest';
+import {CUSTOM_ELEMENTS_SCHEMA,} from '@angular/core';
 import {provideNativeDateAdapter} from '@angular/material/core';
-
 import {HomeComponent} from './home.component';
 
 import {AuthenticationService} from '../common/services/authentication.service';
+import axios from "axios";
 
+// Mock out all top level functions, such as get, put, delete and post:
+jest.mock("axios");
+
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
 class AuthStub {
   userRole: any = -1;
@@ -23,23 +25,29 @@ class AuthStub {
 class DummyCmp {
 }
 
+
 async function setup(auth = new AuthStub()) {
   const r = await render(HomeComponent, {
     providers: [
-      provideNoopAnimations(),
       provideRouter([
         {path: '', component: DummyCmp},
         {path: 'login', component: DummyCmp},
       ]),
-      provideNativeDateAdapter(),                       // fixes the DateAdapter error
+      provideNativeDateAdapter(),
       {provide: AuthenticationService, useValue: auth},
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA], // don’t instantiate <app-overview>/<app-add-song>
   });
 
   const router = TestBed.inject(Router);
+  mockedAxios.get.mockImplementation(() => Promise.resolve({ status: 200, data: {
+    a: ''
+    } }));
+
+
   return {...r, auth, router};
 }
+
 
 describe('HomeComponent', () => {
   it('renders the toolbar title', async () => {
@@ -69,7 +77,7 @@ describe('HomeComponent', () => {
   it('clicking "Logout" calls component.logout()', async () => {
     const {fixture} = await setup();
     const cmp = fixture.componentInstance as HomeComponent;
-    const spy = vi.spyOn(cmp, 'logout');
+    const spy = jest.spyOn(cmp, 'logout');
 
     const logoutBtn = screen.getByRole('button', {name: /logout/i});
     await userEvent.click(logoutBtn);

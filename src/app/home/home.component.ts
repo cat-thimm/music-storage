@@ -12,7 +12,7 @@ import {
   PrivatePlaylistView, PublicPlaylistView,
   TitleControllerApiSearchTitlesRequest, TitleView,
   UserViewRoleEnum,
-} from 'src/api';
+} from '../../api';
 
 import {AuthenticationService} from '../common/services/authentication.service';
 import {PlaylistService} from '../common/services/playlist.service';

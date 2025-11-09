@@ -4,6 +4,7 @@ export default defineConfig({
   test: {
     root: './',
     globals: true,
+    exclude: ['e2e/**'],
     setupFiles: ['test-setup.ts'],
     environment: 'jsdom',
     watch: true,
@@ -19,7 +20,8 @@ export default defineConfig({
         '**/*.{test,spec}.?(c|m)ts',
         'src/main.ts',
         'src/environments/**',
-        '**/__mocks__/**'
+        '**/__mocks__/**',
+        '**/e2e/**'
       ],
       thresholds: { lines: 80, branches: 70, functions: 80, statements: 80 },
     },

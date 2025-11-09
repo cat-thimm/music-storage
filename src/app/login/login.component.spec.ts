@@ -1,63 +1,65 @@
-import '@testing-library/jest-dom/vitest';
-import {render, screen, waitFor} from '@testing-library/angular';
+import { render, screen, waitFor } from '@testing-library/angular';
 import userEvent from '@testing-library/user-event';
+import '@testing-library/jest-dom';
 import { provideRouter } from '@angular/router';
-import { provideNoopAnimations } from '@angular/platform-browser/animations';
-import { vi, describe, it, expect } from 'vitest';
 
 import { LoginComponent } from './login.component';
 import { AuthenticationService } from '../common/services/authentication.service';
-import {provideZonelessChangeDetection} from "@angular/core";
 
 class AuthStub {
-  user: any = null;
-  login = vi.fn(async (u: string, p: string) => { this.user = { name: u }; });
+  user: { name: string } | null = null;
+  login = jest.fn(async (u: string, p: string) => {
+    this.user = { name: u };
+  });
 }
-class DummyCmp {}
 
-async function setup(auth = new AuthStub()) {
+async function setup() {
+  const auth = new AuthStub();
+
   await render(LoginComponent, {
     providers: [
-      provideNoopAnimations(),
-      provideRouter([{ path: 'home', component: DummyCmp }]),
-      provideZonelessChangeDetection(),
+      provideRouter([
+        { path: 'home', component: class Dummy {} },
+        { path: 'register', component: class Dummy {} },
+      ]),
       { provide: AuthenticationService, useValue: auth },
     ],
   });
 
-  const nameInput = screen.getByLabelText(/name/i);
-  const passInput = screen.getByLabelText(/passwort/i);
-  const submit    = screen.getByRole('button', { name: /anmelden/i });
+  const nameInput = screen.getByLabelText(/name/i) as HTMLInputElement;
+  const passInput = screen.getByLabelText(/passwort/i) as HTMLInputElement;
+  const submit = screen.getByRole('button', { name: /anmelden/i }) as HTMLButtonElement;
 
   return { auth, nameInput, passInput, submit };
 }
 
 describe('LoginComponent', () => {
-  beforeAll(async () => {
-    try {
-      if (typeof process !== 'undefined' && process.versions?.node) {
-        const { readFileSync } = await import('node:fs');
-        const { ɵresolveComponentResources: resolveComponentResources } =
-          await import('@angular/core');
+  it('focuses the name input when tabbing in', async () => {
+    const { nameInput } = await setup();
 
-        await resolveComponentResources(url =>
-          Promise.resolve(readFileSync(new URL(url, import.meta.url), 'utf-8'))
-        );
-      }
-    } catch {
-      return;
-    }
+    await userEvent.tab();
+
+    await waitFor(() => expect(nameInput).toHaveFocus());
   });
 
-  it('disables submit until both fields are valid', async () => {
-    const { submit, nameInput, passInput } = await setup();
+  it('initially disables the login button', async () => {
+    const { submit } = await setup();
 
-    // give Angular Forms one tick to mark the form as invalid
+    await waitFor(() => expect(submit).toBeDisabled());
+  });
+
+
+  it('enables login button if username and password are set', async () => {
+    const { nameInput, passInput, submit } = await setup();
+
+    // initial: invalid -> disabled (wartet auf ngForm-Status)
     await waitFor(() => expect(submit).toBeDisabled());
 
+    // nur Name: weiterhin disabled
     await userEvent.type(nameInput, 'alice');
-    await waitFor(() => expect(submit).toBeDisabled()); // still invalid
+    await waitFor(() => expect(submit).toBeDisabled());
 
+    // Passwort dazu: enabled
     await userEvent.type(passInput, 'secret');
     await waitFor(() => expect(submit).toBeEnabled());
   });

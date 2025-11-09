@@ -21,7 +21,7 @@ export class TabsService {
     try {
       const response = await this.moodController.getMoods()
 
-      if (response.data) {
+      if (response?.data) {
         return response.data
       }
       return null
@@ -36,7 +36,7 @@ export class TabsService {
     try {
       const response = await this.genreController.getGenres()
 
-      if (response.data) {
+      if (response?.data) {
         return response.data
       }
 
@@ -44,13 +44,13 @@ export class TabsService {
       console.error("[tabs-service]: error ", e)
     }
     return null
-  } 
-  
+  }
+
   async getInstruments() {
     try {
       const response = await this.instrumentController.getInstruments()
 
-      if (response.data) {
+      if (response?.data) {
         return response.data
       }
 
@@ -58,13 +58,13 @@ export class TabsService {
       console.error("[tabs-service]: error ", e)
     }
     return null
-  } 
-  
+  }
+
   async getArtists() {
     try {
       const response = await this.artistController.getArtists()
 
-      if (response.data) {
+      if (response?.data) {
         return response.data
       }
 

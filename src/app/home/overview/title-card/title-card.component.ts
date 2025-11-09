@@ -1,7 +1,7 @@
 import { Component, Input, OnInit,  } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { TitleView } from 'src/api';
+import { TitleView } from '../../../../api';
 import { MusicService } from 'src/app/common/services/music.service';
 import {MatCard, MatCardActions, MatCardContent, MatCardHeader, MatCardTitle} from "@angular/material/card";
 import {MatIconModule} from "@angular/material/icon";

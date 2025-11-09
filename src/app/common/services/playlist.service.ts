@@ -1,17 +1,13 @@
 import { Injectable } from '@angular/core';
 
 import {
-  LabelControllerApi,
   PrivatePlaylistControllerApi,
   PrivatePlaylistCreateDTO,
   PrivatePlaylistView,
   PublicPlaylistControllerApi,
-  PublicPlaylistControllerApiCreatePublicPlaylistRequest,
   PublicPlaylistCreateDTO,
   PublicPlaylistView,
-  UserControllerApi,
-} from 'src/api';
-import { AuthenticationService } from './authentication.service';
+} from '../../../api';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +26,7 @@ export class PlaylistService {
         }
       );
 
-      if (response.data) {
+      if (response?.data) {
         return response.data;
       }
     } catch (error) {
@@ -56,7 +52,7 @@ export class PlaylistService {
       const response = await this.publicPlaylistController.getPublicPlaylists({
         labelId,
       });
-      if (response.data) {
+      if (response?.data) {
         return response.data;
       }
     } catch (error) {
