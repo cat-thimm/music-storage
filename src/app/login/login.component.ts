@@ -9,7 +9,6 @@ import {MatCard, MatCardHeader, MatCardTitle, MatCardContent, MatCardActions} fr
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInput} from '@angular/material/input';
 import {MatButton} from '@angular/material/button';
-import {error} from "@angular/compiler-cli/src/transformers/util";
 
 @Component({
   selector: 'app-login',
@@ -47,9 +46,11 @@ export class LoginComponent {
       if (this.auth.user) {
         await this.router.navigate(['/home']);
       } else {
-        alert('User was not found');
+        alert('User was not found.')
+        this.errorMessage.set('User was not found.');
       }
     } catch (err) {
+      alert('Login fehlgeschlagen.')
       this.errorMessage.set('Login fehlgeschlagen.');
       throw new Error("Login fehlgeschlagen.");
     } finally {
@@ -61,5 +62,4 @@ export class LoginComponent {
     throw new Error("Sentry Test Error");
   }
 
-  protected readonly error = error;
 }
